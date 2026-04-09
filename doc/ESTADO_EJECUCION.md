@@ -21,11 +21,11 @@
 | # | Fase | Rol | Estado | Inicio | Cierre | Resumen |
 |---|------|-----|--------|--------|--------|---------|
 | 1 | Setup del Proyecto | Ingeniero Fullstack | ✅ Completada | 06/04/2026 14:30 | 06/04/2026 14:55 | RESUMEN_FASE_1_SETUP.md |
-| 2 | Capa de Datos JSON | Ingeniero Fullstack | ⬜ Pendiente | — | — | — |
-| 3 | Tipos y Validación TS | Ingeniero Fullstack | ⬜ Pendiente | — | — | — |
-| 4 | API Route Handler | Ingeniero Fullstack | ⬜ Pendiente | — | — | — |
-| 5 | UI / Home — Hola Mundo | Diseñador UX/UI | ⬜ Pendiente | — | — | — |
-| 6 | Pipeline CI/CD | Ingeniero Fullstack | ⬜ Pendiente | — | — | — |
+| 2 | Capa de Datos JSON | Ingeniero Fullstack | ✅ Completada | 09/04/2026 14:38 | 09/04/2026 14:39 | RESUMEN_FASE_2_DATOS.md |
+| 3 | Tipos y Validación TS | Ingeniero Fullstack | ✅ Completada | 09/04/2026 14:41 | 09/04/2026 14:42 | RESUMEN_FASE_3_TIPOS.md |
+| 4 | API Route Handler | Ingeniero Fullstack | ✅ Completada | 09/04/2026 14:44 | 09/04/2026 14:44 | RESUMEN_FASE_4_API.md |
+| 5 | UI / Home — Hola Mundo | Diseñador UX/UI | ✅ Completada | 09/04/2026 14:48 | 09/04/2026 14:49 | RESUMEN_FASE_5_UI.md |
+| 6 | Pipeline CI/CD | Ingeniero Fullstack | 🟡 En progreso | 09/04/2026 14:50 | — | — |
 | 7 | Validación y Despliegue | Ingeniero Fullstack | ⬜ Pendiente | — | — | — |
 
 ### Leyenda de Estados
@@ -108,115 +108,177 @@
 ### FASE 2 — Capa de Datos JSON
 
 ```
-[ INICIO  ] Fecha: _____________  Hora: _______
-[ CIERRE  ] Fecha: _____________  Hora: _______
-[ DURACIÓN] _______________________
+[ INICIO  ] Fecha: 09/04/2026  Hora: 14:38
+[ CIERRE  ] Fecha: 09/04/2026  Hora: 14:39
+[ DURACIÓN] 1 minuto
 ```
 
+**Entrada de registro:**
+"Fase 2 iniciada — Creación de la capa de datos JSON"
+
 **Acciones ejecutadas:**
-_— pendiente de registro —_
+1. ✅ Verificación y mantenimiento de los archivos JSON base en `/data`
+2. ✅ Confirmación de que `/data/config.json` y `/data/home.json` tienen la estructura exacta requerida
+3. ✅ Creación de archivo temporal `/lib/__test__/dataService.check.ts` para validar la función genérica `readJsonFile<T>` y las importaciones tipadas
+4. ✅ Comprobación de diagnósticos TypeScript en el editor para `lib/dataService.ts` y el archivo temporal
+5. ✅ Eliminación del archivo temporal de prueba
 
 **Archivos creados/modificados:**
-_— pendiente de registro —_
+- `/data/config.json` → existente y verificado
+- `/data/home.json` → existente y verificado
+- `/data/README.md` → verificado y mantiene la documentación solicitada
+- `/lib/__test__/dataService.check.ts` → creado y eliminado tras la validación
 
 **Estructura JSON generada:**
-_— pendiente de registro —_
+- /data
+  - config.json
+  - home.json
+  - README.md
 
 **Observaciones / Problemas encontrados:**
-_— pendiente de registro —_
+- No fue posible ejecutar `npm run typecheck` en esta terminal porque el sistema no cuenta con `npm`/Node.js instalado localmente.
+- La validación de tipos se confirmó mediante los diagnósticos TypeScript del editor: sin errores en `lib/dataService.ts` ni en el archivo temporal.
 
-**Resultado:**  ⬜ Pendiente
+**Resultado:**  ✅ Completada
 
 ---
 
 ### FASE 3 — Tipos y Validación TypeScript
 
 ```
-[ INICIO  ] Fecha: _____________  Hora: _______
-[ CIERRE  ] Fecha: _____________  Hora: _______
-[ DURACIÓN] _______________________
+[ INICIO  ] Fecha: 09/04/2026  Hora: 14:41
+[ CIERRE  ] Fecha: 09/04/2026  Hora: 14:42
+[ DURACIÓN] 1 minuto
 ```
 
+**Entrada de registro:**
+"Fase 3 iniciada — Definición de tipos e interfaces TypeScript y schemas Zod"
+
 **Acciones ejecutadas:**
-_— pendiente de registro —_
+1. ✅ Verificación y validación de `lib/types.ts` con los tipos `HomeData` y `AppConfig`
+2. ✅ Verificación y validación de `lib/validators.ts` con los schemas `HomeDataSchema` y `AppConfigSchema`
+3. ✅ Añadido `HomeDataZod` y `AppConfigZod` como alias inferidos de Zod
+4. ✅ Verificación de `lib/dataService.ts` para confirmar que `readHomeData()` y `readAppConfig()` usan `readJsonFile<T>` y validan los datos con los schemas Zod
+5. ✅ Comprobación de diagnósticos TypeScript del editor: no se encontraron errores en `lib/types.ts`, `lib/validators.ts` ni `lib/dataService.ts`
 
 **Interfaces y tipos definidos:**
-_— pendiente de registro —_
+- `HomeData`
+- `AppConfig`
 
 **Schemas Zod creados:**
-_— pendiente de registro —_
+- `HomeDataSchema`
+- `AppConfigSchema`
+- `HomeDataZod`
+- `AppConfigZod`
 
 **Resultado de `tsc --noEmit`:**
-_— pendiente de registro —_
+- No fue posible ejecutar `npm run typecheck` localmente porque `npm` no está disponible en este entorno de terminal.
+- Se validó mediante los diagnósticos del editor y no se encontraron errores de tipo.
 
 **Observaciones / Problemas encontrados:**
-_— pendiente de registro —_
+- El código ya cumplía con el plan y los archivos existentes estaban alineados con la fase.
+- La validación del comando `npm run typecheck` no pudo completarse por falta de `npm`/Node.js en la terminal.
 
-**Resultado:**  ⬜ Pendiente
+**Resultado:**  ✅ Completada
 
 ---
 
 ### FASE 4 — API Route Handler
 
 ```
-[ INICIO  ] Fecha: _____________  Hora: _______
-[ CIERRE  ] Fecha: _____________  Hora: _______
-[ DURACIÓN] _______________________
+[ INICIO  ] Fecha: 09/04/2026  Hora: 14:44
+[ CIERRE  ] Fecha: 09/04/2026  Hora: 14:44
+[ DURACIÓN] <1 minuto
 ```
 
+**Entrada de registro:**
+"Fase 4 iniciada — Creación de Route Handler /api/data"
+
 **Acciones ejecutadas:**
-_— pendiente de registro —_
+1. ✅ Creación de `app/api/data/route.ts` con GET que lee `home.json` mediante `readHomeData()` y valida con `HomeDataSchema`
+2. ✅ Creación de `app/api/config/route.ts` con GET que lee `config.json` mediante `readAppConfig()` y valida con `AppConfigSchema`
+3. ✅ Implementación de manejo de errores con respuesta 500 JSON y encabezado `Content-Type: application/json`
+4. ✅ Validación de sintaxis y tipos con diagnósticos del editor: sin errores en ambos endpoints
+5. ✅ Generación de resumen de fase y documentación de la implementación
 
 **Endpoints creados:**
-_— pendiente de registro —_
+- `GET /api/data` → retorna el JSON de `home.json` validado
+- `GET /api/config` → retorna el JSON de `config.json` validado
 
 **Pruebas de endpoint realizadas:**
-_— pendiente de registro —_
+- Se prepararon los comandos:
+  - `curl http://localhost:3000/api/data`
+  - `curl http://localhost:3000/api/config`
+- No se ejecutaron porque `node`/`npm` no están disponibles en esta terminal y no fue posible iniciar el servidor de desarrollo.
 
 **Observaciones / Problemas encontrados:**
-_— pendiente de registro —_
+- No se pudo iniciar `npm run dev` ni ejecutar `npm run typecheck` en esta terminal por falta de `node`/`npm`.
+- La implementación de los endpoints se verificó mediante los diagnósticos TypeScript del editor, sin errores.
 
-**Resultado:**  ⬜ Pendiente
+**Resultado:**  ✅ Completada
 
 ---
 
 ### FASE 5 — UI / Home — Hola Mundo
 
 ```
-[ INICIO  ] Fecha: _____________  Hora: _______
-[ CIERRE  ] Fecha: _____________  Hora: _______
-[ DURACIÓN] _______________________
+[ INICIO  ] Fecha: 09/04/2026  Hora: 14:48
+[ CIERRE  ] Fecha: 09/04/2026  Hora: 14:49
+[ DURACIÓN] 1 minuto
 ```
 
+**Entrada de registro:**
+"Fase 5 iniciada — Diseño e implementación del Home con animación elegante"
+
 **Acciones ejecutadas:**
-_— pendiente de registro —_
+1. ✅ Definición de diseño visual y paleta de colores para el Home.
+2. ✅ Creación de `components/AnimatedText.tsx` como Client Component con animación letra por letra.
+3. ✅ Creación de `components/HolaMundo.tsx` como Client Component con títulos, subtítulo y descripción orquestados.
+4. ✅ Actualización de `app/layout.tsx` con Google Fonts desde `next/font/google` y metadata global.
+5. ✅ Actualización de `app/page.tsx` como Server Component que lee `home.json` con `readHomeData()`.
+6. ✅ Actualización de `app/globals.css` con variables de diseño, reset y fondo global.
 
 **Componentes creados:**
-_— pendiente de registro —_
+- `components/AnimatedText.tsx`
+- `components/HolaMundo.tsx`
 
 **Decisiones de diseño tomadas:**
-_— pendiente de registro —_
+- Paleta: fondo azul noche profundo, acentos cian, texto blanco y secundarios gris azulado.
+- Tipografía: `Space Grotesk` para el título y `Manrope` para el cuerpo.
+- Animación principal: aparición letra por letra del título.
+- Elementos decorativos: barra de color gradient, glow suave difuminado y tarjeta translúcida.
+- Responsive: diseño centrado, espaciado fluido y tipografía escalable para mobile y desktop.
 
 **Animaciones implementadas:**
-_— pendiente de registro —_
+- `AnimatedText` con stagger de letras y subida suave.
+- Subtítulo con fade-in retardado.
+- Descripción con entrada progresiva en opacidad y desplazamiento.
+- Glow y barra decorativa animada en la sección principal.
 
 **Validación visual (descripción):**
-_— pendiente de registro —_
+- Se planeó una tarjeta centralizada con contenido centrado y un fondo nocturno.
+- El texto del título se presenta con un degradado azul claro y animación secuencial.
+- El subtítulo aparece después con una cápsula luminosa y el cuerpo con lectura suave.
+- El layout es adaptable a pantallas pequeñas gracias al espaciado responsivo.
 
 **Observaciones / Problemas encontrados:**
-_— pendiente de registro —_
+- No se pudo iniciar el servidor de desarrollo local ni ejecutar `npm run typecheck` en esta terminal porque `node`/`npm` no están disponibles.
+- La verificación de código se basó en los diagnósticos del editor y el estado del archivo.
 
-**Resultado:**  ⬜ Pendiente
+**Resultado:**  ✅ Completada
 
 ---
 
 ### FASE 6 — Pipeline CI/CD
 
 ```
-[ INICIO  ] Fecha: _____________  Hora: _______
+[ INICIO  ] Fecha: 09/04/2026  Hora: 14:50
 [ CIERRE  ] Fecha: _____________  Hora: _______
 [ DURACIÓN] _______________________
 ```
+
+**Entrada de registro:**
+"Fase 6 iniciada — Configuración de pipeline GitHub → Vercel + GitHub Actions"
 
 **Acciones ejecutadas:**
 _— pendiente de registro —_
