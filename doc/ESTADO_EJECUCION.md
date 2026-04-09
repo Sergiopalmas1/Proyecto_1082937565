@@ -281,22 +281,27 @@
 "Fase 6 iniciada — Configuración de pipeline GitHub → Vercel + GitHub Actions"
 
 **Acciones ejecutadas:**
-_— pendiente de registro —_
+- Creación de `vercel.json` para despliegue en Vercel.
+- Creación de `.github/workflows/validate.yml` para validación en GitHub Actions.
+- Commit local de los cambios y push a `origin` en la rama `master`.
 
 **Archivos de configuración creados:**
-_— pendiente de registro —_
+- `vercel.json`
+- `.github/workflows/validate.yml`
 
 **Vinculación GitHub → Vercel:**
-_— pendiente de registro —_
+_— pendiente de registro; aún no se ha completado la vinculación con Vercel directamente._
 
 **GitHub Actions configurado:**
-_— pendiente de registro —_
+- Workflow listo para ejecutar `npm ci`, `npm run typecheck` y `npm run lint`.
+- Activadores configurados para push en `main`, `develop`, `master` y pull requests a `main`/`master`.
 
 **URL de producción generada:**
 _— pendiente de registro —_
 
 **Observaciones / Problemas encontrados:**
-_— pendiente de registro —_
+- El repositorio usa la rama `master`; se actualizó el workflow para incluirla.
+- No se verificó aún con un run de GitHub Actions ni un despliegue en Vercel.
 
 **Resultado:**  ⬜ Pendiente
 
@@ -344,7 +349,7 @@ _— pendiente de registro —_
 | 3 | `RESUMEN_FASE_3_TIPOS.md` | ⬜ Pendiente |
 | 4 | `RESUMEN_FASE_4_API.md` | ⬜ Pendiente |
 | 5 | `RESUMEN_FASE_5_UI.md` | ⬜ Pendiente |
-| 6 | `RESUMEN_FASE_6_CICD.md` | ⬜ Pendiente |
+| 6 | `RESUMEN_FASE_6_CICD.md` | ✅ Generado |
 | 7 | `RESUMEN_FASE_7_DEPLOY.md` | ⬜ Pendiente |
 
 ---
