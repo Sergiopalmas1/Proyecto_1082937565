@@ -20,7 +20,7 @@ export function readJsonFile<T>(filename: string): T {
 export function readHomeData(): HomeData {
   const raw = readJsonFile<unknown>('home.json');
   const validated = HomeDataSchema.parse(raw);
-  return validated as HomeData;
+  return validated;
 }
 
 /**
@@ -30,5 +30,5 @@ export function readHomeData(): HomeData {
 export function readAppConfig(): AppConfig {
   const raw = readJsonFile<unknown>('config.json');
   const validated = AppConfigSchema.parse(raw);
-  return validated as AppConfig;
+  return validated;
 }

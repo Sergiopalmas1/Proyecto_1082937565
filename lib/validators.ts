@@ -25,5 +25,3 @@ export const AppConfigSchema = z.object({
 // Tipos inferidos de Zod (opcional pero recomendado)
 export type HomeDataValidated = z.infer<typeof HomeDataSchema>;
 export type AppConfigValidated = z.infer<typeof AppConfigSchema>;
-export type HomeDataZod = z.infer<typeof HomeDataSchema>;
-export type AppConfigZod = z.infer<typeof AppConfigSchema>;

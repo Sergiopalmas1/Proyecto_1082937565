@@ -1,0 +1,20 @@
+# Vercel deployment ignores
+
+# Local metadata and docs
+.vscode/
+.github/
+doc/
+README.md
+readme.md
+*.md
+
+# Build artifacts
+.next/
+node_modules/
+*.tsbuildinfo
+
+# Local env
+.env*
+
+# Misc
+*.log
