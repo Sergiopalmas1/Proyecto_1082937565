@@ -11,6 +11,7 @@ export const HomeDataSchema = z.object({
   meta: z.object({
     pageTitle: z.string().min(1, 'Page title is required'),
     description: z.string().min(1, 'Meta description is required'),
+    author: z.string().optional(),
   }),
 });
 
@@ -20,6 +21,10 @@ export const AppConfigSchema = z.object({
   version: z.string().regex(/^\d+\.\d+\.\d+$/, 'Version must be semantic'),
   locale: z.string().min(2, 'Locale is required'),
   theme: z.enum(['light', 'dark']),
+  author: z.object({
+    name: z.string().min(1, 'Author name is required'),
+    document: z.string().min(1, 'Document number is required'),
+  }).optional(),
 });
 
 // Tipos inferidos de Zod (opcional pero recomendado)

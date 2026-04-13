@@ -10,6 +10,7 @@ export interface HomeData {
   meta: {
     pageTitle: string;
     description: string;
+    author?: string;
   };
 }
 
@@ -18,4 +19,8 @@ export interface AppConfig {
   version: string;
   locale: string;
   theme: 'light' | 'dark';
+  author?: {
+    name: string;
+    document: string;
+  };
 }

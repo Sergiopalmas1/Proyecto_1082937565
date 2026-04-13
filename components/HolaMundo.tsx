@@ -48,6 +48,19 @@ export default function HolaMundo({ title, subtitle, description }: HolaMundoPro
           </div>
         </motion.div>
       </div>
+      <motion.footer
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.65, delay: 1.2, ease: "easeOut" }}
+        className="absolute bottom-8 flex flex-col items-center gap-2 text-xs"
+      >
+        <div className="flex items-center justify-center gap-4">
+          <span className="text-slate-500">Desarrollado por:</span>
+          <span className="font-semibold text-cyan-300">Sergio Palma</span>
+          <span className="text-slate-500">|</span>
+          <span className="font-mono text-cyan-300">Doc: 1082937565</span>
+        </div>
+      </motion.footer>
     </section>
   );
 }

@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Home | Mi App",
-  description: "Página principal del sistema",
+  title: "Home | Mi App — Sergio Palma",
+  description: "Página principal del sistema | Creado por Sergio Palma (Doc: 1082937565)",
+  authors: [{ name: "Sergio Palma", url: "https://vercel.com" }],
 };
 
 export default function RootLayout({

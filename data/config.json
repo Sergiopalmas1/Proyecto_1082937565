@@ -2,5 +2,9 @@
   "appName": "Mi App TypeScript",
   "version": "1.0.0",
   "locale": "es-CO",
-  "theme": "dark"
+  "theme": "dark",
+  "author": {
+    "name": "Sergio Palma",
+    "document": "1082937565"
+  }
 }
