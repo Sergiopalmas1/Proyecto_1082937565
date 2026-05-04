@@ -1,22 +1,39 @@
-import type { Metadata } from "next";
-import HolaMundo from "@/components/HolaMundo";
-import { readHomeData } from "@/lib/dataService";
+'use client';
 
-const homeData = readHomeData();
-
-export const metadata: Metadata = {
-  title: homeData.meta.pageTitle,
-  description: homeData.meta.description,
-};
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    // Verificar sesión y redirigir
+    const checkSession = async () => {
+      try {
+        const response = await fetch('/api/auth/me');
+        if (response.ok) {
+          // Usuario autenticado, ir al dashboard
+          router.push('/dashboard');
+        } else {
+          // No autenticado, ir al login
+          router.push('/login');
+        }
+      } catch {
+        // Error, ir al login
+        router.push('/login');
+      }
+    };
+
+    checkSession();
+  }, [router]);
+
+  // Mostrar loader mientras se verifica
   return (
-    <main className="min-h-screen bg-slate-950">
-      <HolaMundo
-        title={homeData.hero.title}
-        subtitle={homeData.hero.subtitle}
-        description={homeData.hero.description}
-      />
+    <main className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#F5EFE0' }}>
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-700 mx-auto mb-4"></div>
+        <p style={{ color: '#2D5016' }}>Cargando SIG Bovino...</p>
+      </div>
     </main>
   );
 }
