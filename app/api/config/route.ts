@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
 import { readAppConfig } from '../../../lib/dataService';
-import { AppConfigSchema } from '../../../lib/validators';
 
 export async function GET() {
   try {
-    const config = readAppConfig();
-    const validated = AppConfigSchema.parse(config);
+    const config = await readAppConfig();
 
-    return NextResponse.json(validated, {
+    return NextResponse.json(config, {
       headers: {
         'Content-Type': 'application/json',
       },

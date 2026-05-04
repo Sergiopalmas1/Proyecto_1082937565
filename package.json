@@ -11,6 +11,7 @@
     "validate": "npm run typecheck && npm run lint"
   },
   "dependencies": {
+    "@vercel/blob": "^0.21.0",
     "framer-motion": "^11.18.2",
     "next": "16.2.2",
     "react": "19.2.4",

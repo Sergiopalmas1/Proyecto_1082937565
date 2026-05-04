@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
 import { readHomeData } from '../../../lib/dataService';
-import { HomeDataSchema } from '../../../lib/validators';
 
 export async function GET() {
   try {
-    const data = readHomeData();
-    const validated = HomeDataSchema.parse(data);
+    const data = await readHomeData();
 
-    return NextResponse.json(validated, {
+    return NextResponse.json(data, {
       headers: {
         'Content-Type': 'application/json',
       },
