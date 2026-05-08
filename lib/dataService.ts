@@ -1,6 +1,7 @@
-import { list, put, get } from '@vercel/blob';
+import { list, put, getDownloadUrl } from '@vercel/blob';
 import { HomeData, AppConfig } from './types';
 import { HomeDataSchema, AppConfigSchema } from './validators';
+
 
 /**
  * Función genérica para leer archivos JSON desde Vercel Blob
@@ -8,16 +9,18 @@ import { HomeDataSchema, AppConfigSchema } from './validators';
  */
 export async function readJsonFile<T>(filename: string): Promise<T> {
   try {
-    const blob = await get(filename, {
+    // Obtener URL de descarga pública/firmada desde Vercel Blob
+    const url = await getDownloadUrl(filename, {
       token: process.env.BLOB_READ_WRITE_TOKEN,
     });
 
-    if (!blob) {
+    if (!url) {
       throw new Error(`Archivo no encontrado: ${filename}`);
     }
 
-    const buffer = await blob.arrayBuffer();
-    const text = new TextDecoder().decode(buffer);
+    const res = await fetch(url.toString());
+    if (!res.ok) throw new Error(`Error descargando ${filename}: ${res.status}`);
+    const text = await res.text();
     return JSON.parse(text) as T;
   } catch (error) {
     console.error(`Error leyendo ${filename} desde Vercel Blob:`, error);
