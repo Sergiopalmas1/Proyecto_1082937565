@@ -15,9 +15,10 @@ import { writeHomeData, writeAppConfig } from '../lib/dataService';
 import fs from 'fs';
 import path from 'path';
 
-// Verificar que el token está disponible
-if (!process.env.BLOB_READ_WRITE_TOKEN) {
-  console.error('❌ Error: BLOB_READ_WRITE_TOKEN no está definido en .env.local');
+// Verificar que el token está disponible (acepta nombre de variable específico del proyecto)
+const BLOB_TOKEN = process.env.BLOB_SIGBOVINO_READ_WRITE_TOKEN || process.env.BLOB_READ_WRITE_TOKEN;
+if (!BLOB_TOKEN) {
+  console.error('❌ Error: BLOB_SIGBOVINO_READ_WRITE_TOKEN / BLOB_READ_WRITE_TOKEN no está definido en .env.local');
   process.exit(1);
 }
 

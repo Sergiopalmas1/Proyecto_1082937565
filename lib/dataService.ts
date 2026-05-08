@@ -2,6 +2,9 @@ import { list, put, getDownloadUrl } from '@vercel/blob';
 import { HomeData, AppConfig } from './types';
 import { HomeDataSchema, AppConfigSchema } from './validators';
 
+// Prefer the project-specific token name; fallback to generic name for backwards compatibility
+const BLOB_TOKEN = process.env.BLOB_SIGBOVINO_READ_WRITE_TOKEN || process.env.BLOB_READ_WRITE_TOKEN;
+
 
 /**
  * Función genérica para leer archivos JSON desde Vercel Blob
@@ -11,7 +14,7 @@ export async function readJsonFile<T>(filename: string): Promise<T> {
   try {
     // Obtener URL de descarga pública/firmada desde Vercel Blob
     const url = await getDownloadUrl(filename, {
-      token: process.env.BLOB_READ_WRITE_TOKEN,
+      token: BLOB_TOKEN,
     });
 
     if (!url) {
@@ -37,7 +40,7 @@ export async function writeJsonFile<T>(filename: string, data: T): Promise<void>
     const jsonString = JSON.stringify(data, null, 2);
     await put(filename, jsonString, {
       access: 'private',
-      token: process.env.BLOB_READ_WRITE_TOKEN,
+      token: BLOB_TOKEN,
       contentType: 'application/json',
     });
   } catch (error) {
@@ -90,7 +93,7 @@ export async function writeAppConfig(data: unknown): Promise<void> {
 export async function listBlobFiles(): Promise<string[]> {
   try {
     const { blobs } = await list({
-      token: process.env.BLOB_READ_WRITE_TOKEN,
+      token: BLOB_TOKEN,
     });
     return blobs.map(blob => blob.pathname);
   } catch (error) {
