@@ -8,15 +8,16 @@ import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { SafeUser, JWTPayload, UserRole } from './types';
 
-const JWT_SECRET = process.env.JWT_SECRET;
 const COOKIE_NAME = 'sig-bovino-session';
 const JWT_EXPIRATION = '24h';
 
-if (!JWT_SECRET) {
-  throw new Error('JWT_SECRET no configurada en variables de entorno');
+function getSecret(): Uint8Array {
+  const JWT_SECRET = process.env.JWT_SECRET;
+  if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET no configurada en variables de entorno');
+  }
+  return new TextEncoder().encode(JWT_SECRET);
 }
-
-const secret = new TextEncoder().encode(JWT_SECRET);
 
 // ============================================
 // HASH Y VERIFICACIÓN DE CONTRASEÑAS
@@ -57,7 +58,7 @@ export async function createJWT(
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime(JWT_EXPIRATION)
-    .sign(secret);
+    .sign(getSecret());
 
   return token;
 }
@@ -67,7 +68,7 @@ export async function createJWT(
  */
 export async function verifyJWT(token: string): Promise<JWTPayload | null> {
   try {
-    const verified = await jwtVerify(token, secret);
+    const verified = await jwtVerify(token, getSecret());
     return verified.payload as unknown as JWTPayload;
   } catch (error) {
     return null;
