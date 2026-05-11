@@ -189,7 +189,7 @@ export default function ReproductionPage() {
 
                 <select
                   value={filterState}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilterState(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFilterState(e.target.value)}
                   className="w-full md:w-44 px-3 py-2 border border-gray-300 rounded-md bg-white"
                 >
                   {STATUS_OPTIONS.map(option => (
@@ -266,7 +266,7 @@ export default function ReproductionPage() {
                         <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de evento</label>
                         <select
                           value={eventType}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEventType(e.target.value as ReproductiveEventType)}
+                          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setEventType(e.target.value as ReproductiveEventType)}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md"
                         >
                           {Object.entries(EVENT_LABELS).map(([key, label]) => (
@@ -304,7 +304,7 @@ export default function ReproductionPage() {
                         <label className="block text-sm font-medium text-gray-700 mb-1">Notas</label>
                         <textarea
                           value={notes}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNotes(e.target.value)}
+                          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNotes(e.target.value)}
                           rows={3}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md"
                           placeholder="Observaciones clínicas o detalles adicionales"

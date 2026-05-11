@@ -171,7 +171,7 @@ export default function MilkProductionPage() {
               </label>
               <select
                 value={selectedShift}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSelectedShift(e.target.value as 'mañana' | 'tarde')}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedShift(e.target.value as 'mañana' | 'tarde')}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="mañana">Mañana</option>
@@ -185,7 +185,7 @@ export default function MilkProductionPage() {
               </label>
               <select
                 value={selectedShed}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSelectedShed(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedShed(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">Todas las bodegas</option>

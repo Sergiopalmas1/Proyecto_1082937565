@@ -247,7 +247,7 @@ export default function ShedsPage() {
               <label className="block text-sm font-medium mb-1">Tipo</label>
               <select
                 value={formData.type}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, type: e.target.value })}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, type: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="pastizal">Pastizal</option>

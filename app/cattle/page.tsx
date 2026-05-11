@@ -422,7 +422,7 @@ function CattlePage() {
               <select
                 required
                 value={formData.sex}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, sex: e.target.value as 'macho' | 'hembra' })}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, sex: e.target.value as 'macho' | 'hembra' })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="hembra">Hembra</option>
@@ -493,7 +493,7 @@ function CattlePage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Notas</label>
             <textarea
               value={formData.notes}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, notes: e.target.value })}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setFormData({ ...formData, notes: e.target.value })}
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Observaciones adicionales..."
