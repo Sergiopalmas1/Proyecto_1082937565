@@ -17,8 +17,8 @@ export function getSupabaseClient(): SupabaseClient | null {
   if (_client) return _client;
   if (_checked) return null;
 
-  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASESUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const url = process.env.SUPABASE_SIGBOVINO_SUPABASE_URL || process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SIGBOVINO_SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   _checked = true;
 
@@ -56,7 +56,7 @@ export const createServerSupabaseClient = requireSupabaseClient;
  * Usa el paquete postgres con POSTGRES_URL
  */
 export async function executeSql(query: string): Promise<void> {
-  const connString = process.env.POSTGRES_URL;
+  const connString = process.env.SUPABASE_SIGBOVINO_POSTGRES_URL || process.env.POSTGRES_URL;
 
   if (!connString) {
     throw new Error('POSTGRES_URL no configurado');

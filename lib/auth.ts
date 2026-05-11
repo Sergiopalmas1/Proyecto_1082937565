@@ -12,7 +12,7 @@ const COOKIE_NAME = 'sig-bovino-session';
 const JWT_EXPIRATION = '24h';
 
 function getSecret(): Uint8Array {
-  const JWT_SECRET = process.env.JWT_SECRET;
+  const JWT_SECRET = process.env.SUPABASE_SIGBOVINO_SUPABASE_JWT_SECRET || process.env.JWT_SECRET;
   if (!JWT_SECRET) {
     throw new Error('JWT_SECRET no configurada en variables de entorno');
   }
