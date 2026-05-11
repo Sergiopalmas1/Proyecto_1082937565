@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ToastProvider } from "@/components/ui";
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "SIG Bovino — Gestión de Ganado",
@@ -14,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className="h-full antialiased">
-      <body className="min-h-full bg-[#F5EFE0] text-slate-900">{children}</body>
+      <body className="min-h-full bg-[#F5EFE0] text-slate-900">
+        <ToastProvider>{children}</ToastProvider>
+      </body>
     </html>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, Button, Badge, Table, Thead, Tbody, Tr, Th, Td, EmptyState, Modal, useToast } from '@/components/ui';
 import { CattleWithDetails } from '@/lib/types';
@@ -14,7 +14,15 @@ interface CattleListResponse {
 
 const PAGE_SIZE = 50;
 
-export default function CattlePage() {
+export default function CattlePageWrapper() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center">Cargando...</div>}>
+      <CattlePage />
+    </Suspense>
+  );
+}
+
+function CattlePage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { showToast } = useToast();
@@ -268,7 +276,7 @@ export default function CattlePage() {
             id="search"
             type="search"
             value={searchInput}
-            onChange={(event) => setSearchInput(event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSearchInput(event.target.value)}
             placeholder="Buscar por código, nombre o bodega"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
           />
@@ -391,7 +399,7 @@ export default function CattlePage() {
                 type="text"
                 required
                 value={formData.code}
-                onChange={(e) => setFormData({ ...formData, code: e.target.value })}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, code: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Ej: V001"
               />
@@ -401,7 +409,7 @@ export default function CattlePage() {
               <input
                 type="text"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Nombre del animal"
               />
@@ -414,7 +422,7 @@ export default function CattlePage() {
               <select
                 required
                 value={formData.sex}
-                onChange={(e) => setFormData({ ...formData, sex: e.target.value as 'macho' | 'hembra' })}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, sex: e.target.value as 'macho' | 'hembra' })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="hembra">Hembra</option>
@@ -427,7 +435,7 @@ export default function CattlePage() {
                 type="date"
                 required
                 value={formData.birth_date}
-                onChange={(e) => setFormData({ ...formData, birth_date: e.target.value })}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, birth_date: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
@@ -439,7 +447,7 @@ export default function CattlePage() {
               <input
                 type="text"
                 value={formData.breed}
-                onChange={(e) => setFormData({ ...formData, breed: e.target.value })}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, breed: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Ej: Holstein"
               />
@@ -449,7 +457,7 @@ export default function CattlePage() {
               <input
                 type="text"
                 value={formData.color}
-                onChange={(e) => setFormData({ ...formData, color: e.target.value })}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, color: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Ej: Blanco y negro"
               />
@@ -463,7 +471,7 @@ export default function CattlePage() {
                 type="number"
                 step="0.1"
                 value={formData.weight_kg || ''}
-                onChange={(e) => setFormData({ ...formData, weight_kg: e.target.value ? parseFloat(e.target.value) : undefined })}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, weight_kg: e.target.value ? parseFloat(e.target.value) : undefined })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Ej: 450.5"
               />
@@ -474,7 +482,7 @@ export default function CattlePage() {
                 type="number"
                 step="0.01"
                 value={formData.estimated_value || ''}
-                onChange={(e) => setFormData({ ...formData, estimated_value: e.target.value ? parseFloat(e.target.value) : undefined })}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, estimated_value: e.target.value ? parseFloat(e.target.value) : undefined })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Ej: 2500000"
               />
@@ -485,7 +493,7 @@ export default function CattlePage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Notas</label>
             <textarea
               value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, notes: e.target.value })}
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Observaciones adicionales..."

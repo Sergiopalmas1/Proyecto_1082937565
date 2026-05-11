@@ -210,7 +210,7 @@ export default function VaccinationsPage() {
               </label>
               <select
                 value={selectedVaccineType}
-                onChange={(e) => setSelectedVaccineType(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSelectedVaccineType(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">Seleccionar vacuna</option>
@@ -229,7 +229,7 @@ export default function VaccinationsPage() {
               <input
                 type="date"
                 value={appliedDate}
-                onChange={(e) => setAppliedDate(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAppliedDate(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -241,7 +241,7 @@ export default function VaccinationsPage() {
               <input
                 type="text"
                 value={dose}
-                onChange={(e) => setDose(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDose(e.target.value)}
                 placeholder="Ej: 2ml"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               />
@@ -254,7 +254,7 @@ export default function VaccinationsPage() {
               <input
                 type="text"
                 value={notes}
-                onChange={(e) => setNotes(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNotes(e.target.value)}
                 placeholder="Observaciones"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               />

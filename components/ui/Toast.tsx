@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 
 interface ToastProps {
+  key?: React.Key;
   message: string;
   type?: 'success' | 'error' | 'info' | 'warning';
   duration?: number;

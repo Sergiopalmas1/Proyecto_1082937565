@@ -115,7 +115,7 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 disabled={loading}
                 required
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-2 transition"
@@ -137,7 +137,7 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 disabled={loading}
                 required
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-2 transition"
@@ -169,12 +169,12 @@ export default function LoginPage() {
               style={{
                 backgroundColor: loading ? '#8B6F47' : '#2D5016',
               }}
-              onMouseEnter={(e) => {
+              onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
                 if (!loading) {
                   e.currentTarget.style.backgroundColor = '#1F3A0D';
                 }
               }}
-              onMouseLeave={(e) => {
+              onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
                 if (!loading) {
                   e.currentTarget.style.backgroundColor = '#2D5016';
                 }
