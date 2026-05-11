@@ -3,13 +3,19 @@
  * SIG Bovino - Fase 1
  */
 
-import * as bcrypt from 'bcryptjs';
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { SafeUser, JWTPayload, UserRole } from './types';
 
 const COOKIE_NAME = 'sig-bovino-session';
 const JWT_EXPIRATION = '24h';
+
+// bcryptjs usa __dirname (Node.js API) — importar dinámicamente para
+// evitar que Next.js 16 lo incluya en el bundle del Proxy (edge runtime).
+async function getBcrypt() {
+  const bcrypt = await import('bcryptjs');
+  return bcrypt.default || bcrypt;
+}
 
 function getSecret(): Uint8Array {
   const JWT_SECRET = process.env.SUPABASE_SIGBOVINO_SUPABASE_JWT_SECRET || process.env.JWT_SECRET;
@@ -27,6 +33,7 @@ function getSecret(): Uint8Array {
  * Hash de contraseña con bcrypt
  */
 export async function hashPassword(password: string): Promise<string> {
+  const bcrypt = await getBcrypt();
   const salt = await bcrypt.genSalt(10);
   return bcrypt.hash(password, salt);
 }
@@ -35,6 +42,7 @@ export async function hashPassword(password: string): Promise<string> {
  * Verificar contraseña
  */
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
+  const bcrypt = await getBcrypt();
   return bcrypt.compare(password, hash);
 }
 
