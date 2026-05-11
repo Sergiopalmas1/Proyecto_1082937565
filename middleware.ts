@@ -16,7 +16,9 @@ function getSecret(): Uint8Array {
 
 async function verifyToken(token: string) {
   try {
-    const { payload } = await jwtVerify(token, getSecret());
+    const secret = getSecret();
+    if (secret.length === 0) return null;
+    const { payload } = await jwtVerify(token, secret);
     return payload as { userId: string; email: string; role: string };
   } catch {
     return null;
@@ -24,7 +26,8 @@ async function verifyToken(token: string) {
 }
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  try {
+    const { pathname } = request.nextUrl;
 
   // Rutas que requieren autenticación
   const protectedRoutes = ['/dashboard', '/admin', '/cattle', '/sheds', '/milk', '/vaccinations', '/reproduction', '/reports'];
@@ -60,6 +63,10 @@ export async function middleware(request: NextRequest) {
 
   // Ruta pública, continuar
   return NextResponse.next();
+  } catch {
+    // Si el middleware falla por cualquier razón, dejar pasar
+    return NextResponse.next();
+  }
 }
 
 export const config = {
