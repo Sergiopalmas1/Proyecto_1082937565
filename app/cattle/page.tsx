@@ -335,11 +335,6 @@ function CattlePage() {
           </div>
         </Card>
       </div>
-            </div>
-            <div className="text-sm text-gray-600">Con Crías</div>
-          </div>
-        </Card>
-      </div>
 
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex-1">
