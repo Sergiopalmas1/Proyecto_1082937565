@@ -3,7 +3,7 @@
 import React from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'danger' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'danger' | 'ghost' | 'success';
   size?: 'sm' | 'md' | 'lg';
   loading?: boolean;
   children: React.ReactNode;
@@ -18,21 +18,22 @@ export function Button({
   ...props
 }: ButtonProps) {
   const baseStyle =
-    'font-medium rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-offset-2';
+    'font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
 
   const sizeStyle = {
-    sm: 'px-3 py-1 text-sm',
-    md: 'px-4 py-2 text-base',
+    sm: 'px-3 py-1.5 text-sm',
+    md: 'px-4 py-2.5 text-base',
     lg: 'px-6 py-3 text-lg',
   }[size];
 
   const variantStyle = {
     primary:
-      'bg-green-700 text-white hover:bg-green-800 focus:ring-green-500 disabled:bg-gray-400',
+      'bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 shadow-md hover:shadow-lg focus:ring-green-500',
     secondary:
-      'bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-400 disabled:bg-gray-300',
-    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-gray-400',
-    ghost: 'bg-transparent text-gray-900 hover:bg-gray-100 focus:ring-gray-400',
+      'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-400 border border-gray-300',
+    danger: 'bg-red-600 text-white hover:bg-red-700 shadow-md hover:shadow-lg focus:ring-red-500',
+    success: 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-md hover:shadow-lg focus:ring-emerald-500',
+    ghost: 'bg-transparent text-green-700 hover:bg-green-50 focus:ring-green-400',
   }[variant];
 
   return (
@@ -43,7 +44,14 @@ export function Button({
       disabled={disabled || loading}
       {...props}
     >
-      {loading ? '...' : children}
+      {loading ? (
+        <span className="flex items-center gap-2">
+          <span className="animate-spin">⟳</span>
+          Cargando...
+        </span>
+      ) : (
+        children
+      )}
     </button>
   );
 }

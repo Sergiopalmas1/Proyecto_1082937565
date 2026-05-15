@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { Card, Button, EmptyState } from '@/components/ui';
 import { SafeUser } from '@/lib/types';
@@ -61,15 +62,19 @@ export default function DashboardPage() {
   return (
     <AppLayout user={user}>
       <div className="space-y-8">
-        {/* Título */}
-        <div>
-          <h1 className="text-4xl font-bold mb-2" style={{ color: '#1F3A0D' }}>
-            Bienvenido, {user.name}
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="border-b border-gray-200 pb-6"
+        >
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            👋 Bienvenido, {user.name}
           </h1>
-          <p style={{ color: '#6B5635' }}>
-            Rol: <span className="font-semibold">{user.role === 'admin' ? 'Administrador' : user.role === 'veterinario' ? 'Veterinario' : 'Operario'}</span>
+          <p className="text-gray-600">
+            Rol: <span className="font-semibold text-gray-900">{user.role === 'admin' ? '👨‍💼 Administrador' : user.role === 'veterinario' ? '👨‍⚕️ Veterinario' : '👷 Operario'}</span>
           </p>
-        </div>
+        </motion.div>
 
         {/* Dashboard por rol */}
         {user.role === 'admin' && <AdminDashboard data={dashboardData} />}
@@ -82,97 +87,84 @@ export default function DashboardPage() {
 
 function AdminDashboard({ data }: { data: any }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <Card>
-        <div className="text-center">
-          <p style={{ color: '#6B5635' }} className="text-sm mb-1">
-            Total de animales
-          </p>
-          <p className="text-3xl font-bold" style={{ color: '#2D5016' }}>
-            {data?.counts?.total_cattle || 0}
-          </p>
-        </div>
-      </Card>
+    <div className="space-y-6">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ staggerChildren: 0.1 }}
+        className="grid grid-cols-1 md:grid-cols-3 gap-6"
+      >
+        <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+          <Card variant="elevated">
+            <div className="text-center">
+              <div className="text-4xl mb-2">🐄</div>
+              <p className="text-gray-600 text-sm mb-1">Total de animales</p>
+              <p className="text-4xl font-bold text-gray-900">{data?.counts?.total_cattle || 0}</p>
+            </div>
+          </Card>
+        </motion.div>
 
-      <Card>
-        <div className="text-center">
-          <p style={{ color: '#6B5635' }} className="text-sm mb-1">
-            Animales activos
-          </p>
-          <p className="text-3xl font-bold" style={{ color: '#2D5016' }}>
-            {data?.counts?.active_cattle || 0}
-          </p>
-        </div>
-      </Card>
+        <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }}>
+          <Card variant="elevated">
+            <div className="text-center">
+              <div className="text-4xl mb-2">✅</div>
+              <p className="text-gray-600 text-sm mb-1">Animales activos</p>
+              <p className="text-4xl font-bold text-green-600">{data?.counts?.active_cattle || 0}</p>
+            </div>
+          </Card>
+        </motion.div>
 
-      <Card>
-        <div className="text-center">
-          <p style={{ color: '#6B5635' }} className="text-sm mb-1">
-            Bodegas
-          </p>
-          <p className="text-3xl font-bold" style={{ color: '#2D5016' }}>
-            {data?.counts?.total_sheds || 0}
-          </p>
-        </div>
-      </Card>
+        <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>
+          <Card variant="elevated">
+            <div className="text-center">
+              <div className="text-4xl mb-2">🏠</div>
+              <p className="text-gray-600 text-sm mb-1">Bodegas</p>
+              <p className="text-4xl font-bold text-blue-600">{data?.counts?.total_sheds || 0}</p>
+            </div>
+          </Card>
+        </motion.div>
+      </motion.div>
 
-      <Card className="md:col-span-1">
-        <div>
-          <p style={{ color: '#2D5016' }} className="text-sm font-semibold mb-3">
-            Alertas de vacunación
-          </p>
-          <p className="text-2xl font-bold" style={{ color: '#D97706' }}>
-            {data?.alerts?.vaccination || 0}
-          </p>
-        </div>
-      </Card>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card variant="outlined" className="border-amber-200 bg-amber-50">
+          <div>
+            <p className="text-amber-900 text-sm font-semibold mb-2">💉 Alertas de vacunación</p>
+            <p className="text-3xl font-bold text-amber-600">{data?.alerts?.vaccination || 0}</p>
+          </div>
+        </Card>
 
-      <Card className="md:col-span-1">
-        <div>
-          <p style={{ color: '#2D5016' }} className="text-sm font-semibold mb-3">
-            Caídas de producción
-          </p>
-          <p className="text-2xl font-bold" style={{ color: '#B91C1C' }}>
-            {data?.alerts?.production_drop || 0}
-          </p>
-        </div>
-      </Card>
+        <Card variant="outlined" className="border-red-200 bg-red-50">
+          <div>
+            <p className="text-red-900 text-sm font-semibold mb-2">📉 Caídas de producción</p>
+            <p className="text-3xl font-bold text-red-600">{data?.alerts?.production_drop || 0}</p>
+          </div>
+        </Card>
 
-      <Card className="md:col-span-1">
-        <div>
-          <p style={{ color: '#2D5016' }} className="text-sm font-semibold mb-3">
-            Eventos reproductivos
-          </p>
-          <p className="text-2xl font-bold" style={{ color: '#15803D' }}>
-            {data?.alerts?.reproductive || 0}
-          </p>
-        </div>
-      </Card>
+        <Card variant="outlined" className="border-emerald-200 bg-emerald-50">
+          <div>
+            <p className="text-emerald-900 text-sm font-semibold mb-2">🔄 Eventos reproductivos</p>
+            <p className="text-3xl font-bold text-emerald-600">{data?.alerts?.reproductive || 0}</p>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 }
 
 function VeterinarioDashboard({ data }: { data: any }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <Card>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <Card variant="elevated">
         <div>
-          <p style={{ color: '#2D5016' }} className="text-sm font-semibold mb-3">
-            Alertas de vacunación
-          </p>
-          <p className="text-3xl font-bold" style={{ color: '#D97706' }}>
-            {data?.alerts?.vaccination || 0}
-          </p>
+          <p className="text-gray-600 text-sm mb-2">💉 Alertas de vacunación</p>
+          <p className="text-4xl font-bold text-amber-600">{data?.alerts?.vaccination || 0}</p>
         </div>
       </Card>
 
-      <Card>
+      <Card variant="elevated">
         <div>
-          <p style={{ color: '#2D5016' }} className="text-sm font-semibold mb-3">
-            Eventos reproductivos
-          </p>
-          <p className="text-3xl font-bold" style={{ color: '#15803D' }}>
-            {data?.alerts?.reproductive || 0}
+          <p className="text-gray-600 text-sm mb-2">🔄 Eventos reproductivos</p>
+          <p className="text-4xl font-bold text-green-600">{data?.alerts?.reproductive || 0}
           </p>
         </div>
       </Card>
@@ -205,22 +197,14 @@ function OperarioDashboard({ data }: { data: any }) {
 
       <Card>
         <div>
-          <p style={{ color: '#2D5016' }} className="text-sm font-semibold mb-3">
-            Observaciones
-          </p>
-          <p className="text-3xl font-bold" style={{ color: '#2D5016' }}>
-            {data?.pending?.observations || 0}
-          </p>
+          <p className="text-gray-600 text-sm mb-2">📝 Observaciones</p>
+          <p className="text-4xl font-bold text-blue-600">{data?.pending?.observations || 0}</p>
         </div>
       </Card>
 
-      <div className="md:col-span-2 p-4 rounded-lg bg-green-50 border border-green-200">
-        <p style={{ color: '#1F3A0D' }} className="mb-2">
-          ✓ Bienvenido al registro de producción
-        </p>
-        <p style={{ color: '#6B5635' }} className="text-sm">
-          Desde el menú "Producción" puedes registrar los litros del ordeño de hoy.
-        </p>
+      <div className="md:col-span-2 p-4 rounded-lg bg-green-50 border-2 border-green-200">
+        <p className="text-green-900 font-semibold mb-2">✓ Bienvenido al registro de producción</p>
+        <p className="text-green-700 text-sm">Desde el menú "Producción" puedes registrar los litros del ordeño de hoy.</p>
       </div>
     </div>
   );

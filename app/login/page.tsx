@@ -44,139 +44,95 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden" style={{ backgroundColor: '#F5EFE0' }}>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-green-50 to-slate-100 relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 opacity-20">
-        {/* Silueta de pastizal */}
-        <svg viewBox="0 0 1200 200" preserveAspectRatio="none" className="w-full h-full">
-          <path
-            d="M0,100 Q150,80 300,100 T600,100 T900,100 T1200,100 L1200,200 L0,200 Z"
-            fill="#2D5016"
-          />
-        </svg>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
       </div>
 
       {/* Card container */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
         className="relative z-10 w-full max-w-md mx-4"
       >
-        <div
-          className="rounded-xl shadow-lg p-8 border-t-4"
-          style={{
-            backgroundColor: '#FAF7F2',
-            borderColor: '#2D5016',
-          }}
-        >
-          {/* Logo y título */}
-          <div className="text-center mb-8">
-            {/* Logo SVG de cabeza de res estilizada */}
-            <svg
-              className="w-14 h-14 mx-auto mb-4"
-              viewBox="0 0 56 56"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g stroke="#2D5016" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                {/* Cara */}
-                <path d="M28 8 L38 14 L38 34 Q38 42 28 42 Q18 42 18 34 L18 14 Z" />
-                {/* Ojos */}
-                <circle cx="24" cy="22" r="2" fill="#2D5016" />
-                <circle cx="32" cy="22" r="2" fill="#2D5016" />
-                {/* Hocico */}
-                <ellipse cx="28" cy="30" rx="3" ry="4" />
-                {/* Orejas */}
-                <path d="M22 12 L20 6 L22 10" />
-                <path d="M34 12 L36 6 L34 10" />
-                {/* Cuernos */}
-                <path d="M20 6 Q16 2 14 2" />
-                <path d="M36 6 Q40 2 42 2" />
-              </g>
-            </svg>
+        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
+          {/* Header gradient */}
+          <div className="h-2 bg-gradient-to-r from-green-600 to-emerald-600"></div>
 
-            <h1 className="text-3xl font-bold mb-1" style={{ color: '#1F3A0D' }}>
-              SIG Bovino
-            </h1>
-            <p className="text-sm" style={{ color: '#6B5635' }}>
-              Control completo de su hato ganadero.
-            </p>
-          </div>
-
-          {/* Formulario */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Email */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1" style={{ color: '#2C2416' }}>
-                Correo electrónico
-              </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                disabled={loading}
-                required
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-2 transition"
-                style={{
-                  borderColor: '#D4C7B0',
-                  '--tw-ring-color': '#2D5016',
-                  color: '#2C2416',
-                } as any}
-                placeholder="tu@email.com"
-              />
+          <div className="p-8">
+            {/* Logo y título */}
+            <div className="text-center mb-8">
+              <div className="text-5xl mb-4">🐄</div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">SIG Bovino</h1>
+              <p className="text-gray-600">Control integral de tu hato ganadero</p>
             </div>
 
-            {/* Password */}
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium mb-1" style={{ color: '#2C2416' }}>
-                Contraseña
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                disabled={loading}
-                required
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-2 transition"
-                style={{
-                  borderColor: '#D4C7B0',
-                  '--tw-ring-color': '#2D5016',
-                  color: '#2C2416',
-                } as any}
-                placeholder="••••••••"
-              />
-            </div>
+            {/* Formulario */}
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Email */}
+              <div>
+                <label htmlFor="email" className="block text-sm font-semibold text-gray-800 mb-2">
+                  Correo electrónico
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                  disabled={loading}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all bg-gray-50"
+                  placeholder="tu@email.com"
+                />
+              </div>
 
-            {/* Error message */}
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="p-3 rounded bg-red-50 border border-red-200"
+              {/* Password */}
+              <div>
+                <label htmlFor="password" className="block text-sm font-semibold text-gray-800 mb-2">
+                  Contraseña
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                  disabled={loading}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all bg-gray-50"
+                  placeholder="••••••••"
+                />
+              </div>
+
+              {/* Error message */}
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 rounded-lg bg-red-50 border border-red-300"
+                >
+                  <p className="text-red-700 text-sm font-medium">⚠️ {error}</p>
+                </motion.div>
+              )}
+
+              {/* Submit button */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3 rounded-lg bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold hover:from-green-700 hover:to-green-800 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed mt-6"
               >
-                <p className="text-red-700 text-sm">{error}</p>
-              </motion.div>
-            )}
-
-            {/* Submit button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-2 rounded-lg text-white font-medium transition-colors mt-6"
-              style={{
-                backgroundColor: loading ? '#8B6F47' : '#2D5016',
-              }}
-              onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
-                if (!loading) {
-                  e.currentTarget.style.backgroundColor = '#1F3A0D';
-                }
-              }}
-              onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
-                if (!loading) {
-                  e.currentTarget.style.backgroundColor = '#2D5016';
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="animate-spin">⟳</span>
+                    Iniciando sesión...
+                  </span>
+                ) : (
+                  'Iniciar sesión'
+                )}
+              </button>
+            </form>
                 }
               }}
             >
