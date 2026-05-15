@@ -106,7 +106,7 @@ export default function ChangePasswordPage() {
               id="currentPassword"
               type="password"
               value={currentPassword}
-              onChange={(event) => setCurrentPassword(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCurrentPassword(event.target.value)}
               required
               className="w-full px-4 py-2 border rounded-lg"
               style={{ borderColor: '#D4C7B0', color: '#2C2416' }}
@@ -121,7 +121,7 @@ export default function ChangePasswordPage() {
               id="newPassword"
               type="password"
               value={newPassword}
-              onChange={(event) => setNewPassword(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => setNewPassword(event.target.value)}
               required
               minLength={8}
               className="w-full px-4 py-2 border rounded-lg"
@@ -137,7 +137,7 @@ export default function ChangePasswordPage() {
               id="confirmPassword"
               type="password"
               value={confirmPassword}
-              onChange={(event) => setConfirmPassword(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(event.target.value)}
               required
               minLength={8}
               className="w-full px-4 py-2 border rounded-lg"

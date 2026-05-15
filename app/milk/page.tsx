@@ -160,7 +160,7 @@ export default function MilkProductionPage() {
               <input
                 type="date"
                 value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSelectedDate(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -171,7 +171,7 @@ export default function MilkProductionPage() {
               </label>
               <select
                 value={selectedShift}
-                onChange={(e) => setSelectedShift(e.target.value as 'mañana' | 'tarde')}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedShift(e.target.value as 'mañana' | 'tarde')}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="mañana">Mañana</option>
@@ -185,7 +185,7 @@ export default function MilkProductionPage() {
               </label>
               <select
                 value={selectedShed}
-                onChange={(e) => setSelectedShed(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedShed(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">Todas las bodegas</option>
@@ -279,7 +279,7 @@ export default function MilkProductionPage() {
                           step="0.1"
                           placeholder="0.0"
                           disabled={isSaving}
-                          onBlur={(e) => {
+                          onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
                             const liters = parseFloat(e.target.value);
                             if (!isNaN(liters) && liters > 0) {
                               registerProduction(female.id, liters);

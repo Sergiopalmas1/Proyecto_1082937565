@@ -236,7 +236,7 @@ export default function ShedsPage() {
               <input
                 type="text"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Ej: Pastizal Norte"
               />
@@ -247,7 +247,7 @@ export default function ShedsPage() {
               <label className="block text-sm font-medium mb-1">Tipo</label>
               <select
                 value={formData.type}
-                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, type: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="pastizal">Pastizal</option>
@@ -265,7 +265,7 @@ export default function ShedsPage() {
               <input
                 type="number"
                 value={formData.surface_m2}
-                onChange={(e) => setFormData({ ...formData, surface_m2: e.target.value })}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, surface_m2: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Ej: 5000"
                 min="0"
@@ -279,7 +279,7 @@ export default function ShedsPage() {
               <input
                 type="number"
                 value={formData.max_capacity}
-                onChange={(e) => setFormData({ ...formData, max_capacity: e.target.value })}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, max_capacity: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Ej: 50"
                 min="1"

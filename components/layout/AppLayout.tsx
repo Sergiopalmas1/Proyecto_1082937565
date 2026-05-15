@@ -86,10 +86,10 @@ export function AppLayout({ user, children }: AppLayoutProps) {
             onClick={handleLogout}
             className="w-full px-4 py-2 rounded-lg text-white text-sm font-medium transition"
             style={{ backgroundColor: '#2D5016' }}
-            onMouseEnter={(e) => {
+            onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.currentTarget.style.backgroundColor = '#1F3A0D';
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.currentTarget.style.backgroundColor = '#2D5016';
             }}
           >

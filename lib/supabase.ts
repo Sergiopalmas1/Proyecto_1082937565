@@ -1,31 +1,77 @@
 /**
  * Clientes de Supabase para SIG Bovino
- * Server-side y client-side safe clients
+ * Build-safe: getSupabaseClient() retorna null si faltan env vars (NO lanza error)
  */
 
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import postgres from 'postgres';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+let _client: SupabaseClient | null = null;
+let _checked = false;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables');
+/**
+ * Cliente build-safe: retorna SupabaseClient | null
+ * NUNCA lanza error si faltan variables de entorno
+ */
+export function getSupabaseClient(): SupabaseClient | null {
+  if (_client) return _client;
+  if (_checked) return null;
+
+  const url = process.env.SUPABASE_SIGBOVINO_SUPABASE_URL || process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SIGBOVINO_SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  _checked = true;
+
+  if (!url || !key) {
+    console.warn('[supabase] No configurado — retornando null (build-safe)');
+    return null;
+  }
+
+  _client = createClient(url, key, {
+    auth: { persistSession: false },
+  });
+
+  return _client;
 }
 
 /**
- * Cliente de Supabase para servidor (con service role key)
- * ⚠️ NUNCA expongas en el cliente
+ * Cliente estricto: lanza error si no hay config.
+ * Solo usar en endpoints/API routes donde Supabase es obligatorio.
  */
-export const createServerSupabaseClient = () => {
-  if (!supabaseServiceRoleKey) {
-    throw new Error('SUPABASE_SERVICE_ROLE_KEY no configurada');
+export function requireSupabaseClient(): SupabaseClient {
+  const client = getSupabaseClient();
+  if (!client) {
+    throw new Error('Supabase no configurado. Verificar SUPABASE_URL y SUPABASE_SERVICE_ROLE_KEY');
   }
-  return createClient(supabaseUrl, supabaseServiceRoleKey);
-};
+  return client;
+}
 
 /**
- * Cliente de Supabase para cliente (con anon key)
- * Seguro para usar en navegador
+ * Alias de compatibilidad — los servicios existentes usan createServerSupabaseClient()
  */
-export const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+export const createServerSupabaseClient = requireSupabaseClient;
+
+/**
+ * Ejecuta SQL directo (DDL: CREATE TABLE, ALTER, etc.)
+ * Usa el paquete postgres con POSTGRES_URL
+ */
+export async function executeSql(query: string): Promise<void> {
+  const connString = process.env.SUPABASE_SIGBOVINO_POSTGRES_URL || process.env.POSTGRES_URL;
+
+  if (!connString) {
+    throw new Error('POSTGRES_URL no configurado');
+  }
+
+  const sql = postgres(connString, {
+    ssl: 'require',
+    connect_timeout: 10,
+    idle_timeout: 5,
+    max: 1,
+  });
+
+  try {
+    await sql.unsafe(query);
+  } finally {
+    await sql.end();
+  }
+}

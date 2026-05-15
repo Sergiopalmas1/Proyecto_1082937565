@@ -4,7 +4,8 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
-
+  // Excluir paquetes con APIs de Node.js del bundle edge
+  serverExternalPackages: ['bcryptjs', 'postgres'],
 };
 
 export default nextConfig;

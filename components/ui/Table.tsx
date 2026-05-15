@@ -16,6 +16,7 @@ interface TableBodyProps {
 
 interface TableRowProps {
   children: React.ReactNode;
+  key?: React.Key;
 }
 
 interface TableHeaderCellProps {

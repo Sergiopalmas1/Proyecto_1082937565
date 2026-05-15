@@ -176,7 +176,7 @@ export default function ReportsPage() {
                   <input
                     type="date"
                     value={formData.production.period1Start}
-                    onChange={(e) => setFormData(prev => ({
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({
                       ...prev,
                       production: { ...prev.production, period1Start: e.target.value }
                     }))}
@@ -185,7 +185,7 @@ export default function ReportsPage() {
                   <input
                     type="date"
                     value={formData.production.period1End}
-                    onChange={(e) => setFormData(prev => ({
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({
                       ...prev,
                       production: { ...prev.production, period1End: e.target.value }
                     }))}
@@ -200,7 +200,7 @@ export default function ReportsPage() {
                   <input
                     type="date"
                     value={formData.production.period2Start}
-                    onChange={(e) => setFormData(prev => ({
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({
                       ...prev,
                       production: { ...prev.production, period2Start: e.target.value }
                     }))}
@@ -209,7 +209,7 @@ export default function ReportsPage() {
                   <input
                     type="date"
                     value={formData.production.period2End}
-                    onChange={(e) => setFormData(prev => ({
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({
                       ...prev,
                       production: { ...prev.production, period2End: e.target.value }
                     }))}
@@ -253,7 +253,7 @@ export default function ReportsPage() {
                     <input
                       type="date"
                       value={formData.sanitary.startDate}
-                      onChange={(e) => setFormData(prev => ({
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({
                         ...prev,
                         sanitary: { ...prev.sanitary, startDate: e.target.value }
                       }))}
@@ -262,7 +262,7 @@ export default function ReportsPage() {
                     <input
                       type="date"
                       value={formData.sanitary.endDate}
-                      onChange={(e) => setFormData(prev => ({
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({
                         ...prev,
                         sanitary: { ...prev.sanitary, endDate: e.target.value }
                       }))}

@@ -12,16 +12,20 @@ const BLOB_TOKEN = process.env.BLOB_SIGBOVINO_READ_WRITE_TOKEN || process.env.BL
  */
 export async function readJsonFile<T>(filename: string): Promise<T> {
   try {
-    // Obtener URL de descarga pública/firmada desde Vercel Blob
-    const url = await getDownloadUrl(filename, {
+    // Buscar el blob por nombre y obtener URL de descarga
+    const { blobs } = await list({
+      prefix: filename,
       token: BLOB_TOKEN,
     });
 
-    if (!url) {
+    const blob = blobs.find(b => b.pathname === filename);
+    if (!blob) {
       throw new Error(`Archivo no encontrado: ${filename}`);
     }
 
-    const res = await fetch(url.toString());
+    const url = getDownloadUrl(blob.url);
+
+    const res = await fetch(url);
     if (!res.ok) throw new Error(`Error descargando ${filename}: ${res.status}`);
     const text = await res.text();
     return JSON.parse(text) as T;
@@ -39,7 +43,7 @@ export async function writeJsonFile<T>(filename: string, data: T): Promise<void>
   try {
     const jsonString = JSON.stringify(data, null, 2);
     await put(filename, jsonString, {
-      access: 'private',
+      access: 'public',
       token: BLOB_TOKEN,
       contentType: 'application/json',
     });

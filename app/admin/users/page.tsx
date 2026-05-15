@@ -214,7 +214,7 @@ export default function UsersPage() {
                 </label>
                 <input
                   value={newUser.name}
-                  onChange={(event) => setNewUser((prev) => ({ ...prev, name: event.target.value }))}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => setNewUser((prev) => ({ ...prev, name: event.target.value }))}
                   required
                   className="w-full px-4 py-2 border rounded-lg"
                   style={{ borderColor: '#D4C7B0', color: '#2C2416' }}
@@ -228,7 +228,7 @@ export default function UsersPage() {
                 <input
                   type="email"
                   value={newUser.email}
-                  onChange={(event) => setNewUser((prev) => ({ ...prev, email: event.target.value }))}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => setNewUser((prev) => ({ ...prev, email: event.target.value }))}
                   required
                   className="w-full px-4 py-2 border rounded-lg"
                   style={{ borderColor: '#D4C7B0', color: '#2C2416' }}
@@ -241,7 +241,7 @@ export default function UsersPage() {
                 </label>
                 <select
                   value={newUser.role}
-                  onChange={(event) => setNewUser((prev) => ({ ...prev, role: event.target.value as 'admin' | 'veterinario' | 'operario' }))}
+                  onChange={(event: React.ChangeEvent<HTMLSelectElement>) => setNewUser((prev) => ({ ...prev, role: event.target.value as 'admin' | 'veterinario' | 'operario' }))}
                   className="w-full px-4 py-2 border rounded-lg"
                   style={{ borderColor: '#D4C7B0', color: '#2C2416' }}
                 >
@@ -257,7 +257,7 @@ export default function UsersPage() {
                 </label>
                 <select
                   value={newUser.is_active ? 'active' : 'inactive'}
-                  onChange={(event) => setNewUser((prev) => ({ ...prev, is_active: event.target.value === 'active' }))}
+                  onChange={(event: React.ChangeEvent<HTMLSelectElement>) => setNewUser((prev) => ({ ...prev, is_active: event.target.value === 'active' }))}
                   className="w-full px-4 py-2 border rounded-lg"
                   style={{ borderColor: '#D4C7B0', color: '#2C2416' }}
                 >
@@ -294,7 +294,7 @@ export default function UsersPage() {
               </label>
               <select
                 value={roleFilter}
-                onChange={(event) => setRoleFilter(event.target.value)}
+                onChange={(event: React.ChangeEvent<HTMLSelectElement>) => setRoleFilter(event.target.value)}
                 className="px-4 py-2 border rounded-lg"
                 style={{ borderColor: '#D4C7B0', color: '#2C2416' }}
               >
@@ -310,7 +310,7 @@ export default function UsersPage() {
               </label>
               <select
                 value={statusFilter}
-                onChange={(event) => setStatusFilter(event.target.value)}
+                onChange={(event: React.ChangeEvent<HTMLSelectElement>) => setStatusFilter(event.target.value)}
                 className="px-4 py-2 border rounded-lg"
                 style={{ borderColor: '#D4C7B0', color: '#2C2416' }}
               >
