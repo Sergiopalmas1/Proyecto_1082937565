@@ -32,10 +32,11 @@ export default function VaccinationsPage() {
       const response = await fetch('/api/vaccine-types');
       if (response.ok) {
         const data = await response.json();
-        setVaccineTypes(data.vaccine_types);
+        setVaccineTypes(Array.isArray(data.vaccine_types) ? data.vaccine_types : []);
       }
     } catch (error) {
       console.error('Error cargando tipos de vacuna:', error);
+      setVaccineTypes([]);
     }
   }, []);
 
@@ -45,10 +46,11 @@ export default function VaccinationsPage() {
       const response = await fetch('/api/cattle?status=activo');
       if (response.ok) {
         const data = await response.json();
-        setCattle(data.cattle);
+        setCattle(Array.isArray(data.cattle) ? data.cattle : []);
       }
     } catch (error) {
       console.error('Error cargando animales:', error);
+      setCattle([]);
     }
   }, []);
 
@@ -58,10 +60,11 @@ export default function VaccinationsPage() {
       const response = await fetch('/api/vaccinations/alerts');
       if (response.ok) {
         const data = await response.json();
-        setAlerts(data.alerts);
+        setAlerts(Array.isArray(data.alerts) ? data.alerts : []);
       }
     } catch (error) {
       // Silenciar error si no es admin/veterinario
+      setAlerts([]);
     }
   }, []);
 

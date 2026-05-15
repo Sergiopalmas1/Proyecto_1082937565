@@ -29,15 +29,20 @@ export default function MilkProductionPage() {
       const response = await fetch('/api/cattle?status=activo&sex=hembra');
       if (response.ok) {
         const data = await response.json();
-        setFemales(data.cattle.map((c: any) => ({
-          id: c.id,
-          code: c.code,
-          name: c.name,
-          shed_name: c.shed?.name,
-        })));
+        if (data.cattle && Array.isArray(data.cattle)) {
+          setFemales(data.cattle.map((c: any) => ({
+            id: c.id,
+            code: c.code,
+            name: c.name,
+            shed_name: c.shed?.name,
+          })));
+        } else {
+          setFemales([]);
+        }
       }
     } catch (error) {
       console.error('Error cargando hembras:', error);
+      setFemales([]);
     }
   }, []);
 

@@ -59,10 +59,11 @@ export default function ShedsPage() {
       const response = await fetch('/api/sheds');
       if (response.ok) {
         const data = await response.json();
-        setSheds(data.sheds);
+        setSheds(Array.isArray(data.sheds) ? data.sheds : []);
       }
     } catch (error) {
       console.error('Error cargando bodegas:', error);
+      setSheds([]);
     }
   };
 
