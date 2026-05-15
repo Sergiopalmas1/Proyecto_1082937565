@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ToastProvider } from "@/components/ui";
+import { AppLogo } from "@/components/ui/Icons";
 
 export const dynamic = 'force-dynamic';
 
