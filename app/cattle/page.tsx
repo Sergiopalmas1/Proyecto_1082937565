@@ -117,7 +117,7 @@ function CattlePage() {
       const response = await fetch('/api/auth/me');
       if (response.ok) {
         const userData = await response.json();
-        setUser(userData);
+        setUser(userData.user);
       }
     } catch (err) {
       console.error('Error fetching user:', err);
