@@ -1,0 +1,323 @@
+
+> mi-proyecto@0.1.0 build
+> next build
+
+   Ôû▓ Next.js 15.5.18
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ Ô£ô Compiled successfully in 4.3s
+   Linting and checking validity of types ...
+
+./app/admin/users/page.tsx
+70:6  Warning: React Hook useEffect has a missing dependency: 'loadUsers'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./app/api/auth/change-password/route.ts
+13:68  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/auth/logout/route.ts
+9:28  Warning: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/auth/me/route.ts
+10:67  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/cattle/route.ts
+12:36  Warning: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+12:58  Warning: 'context' is defined but never used.  @typescript-eslint/no-unused-vars
+12:67  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+12:72  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+26:68  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+45:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/cattle/[id]/audit/route.ts
+2:10  Warning: 'withAuth' is defined but never used.  @typescript-eslint/no-unused-vars
+11:78  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+11:83  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/cattle/[id]/genealogy/route.ts
+11:67  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+11:72  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/cattle/[id]/route.ts
+12:67  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+12:72  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+36:67  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+57:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+112:70  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+112:75  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+128:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+150:60  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+151:57  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+173:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/dashboard/route.ts
+13:67  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/milk/route.ts
+11:58  Warning: 'context' is defined but never used.  @typescript-eslint/no-unused-vars
+11:67  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+11:72  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+11:78  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+39:68  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+39:79  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+66:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/milk/summary/route.ts
+10:58  Warning: 'context' is defined but never used.  @typescript-eslint/no-unused-vars
+10:67  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+10:72  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+10:78  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/production-alerts/route.ts
+2:10  Warning: 'withAuth' is defined but never used.  @typescript-eslint/no-unused-vars
+11:69  Warning: 'context' is defined but never used.  @typescript-eslint/no-unused-vars
+11:78  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+11:83  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+11:89  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+29:70  Warning: 'context' is defined but never used.  @typescript-eslint/no-unused-vars
+29:79  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+29:84  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+29:90  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/reports/fiscal-inventory/route.ts
+5:24  Warning: 'req' is defined but never used.  @typescript-eslint/no-unused-vars
+22:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/reports/production-comparison/route.ts
+46:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/reports/sanitary-ica/route.ts
+31:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/reproduction/route.ts
+7:32  Warning: 'context' is defined but never used.  @typescript-eslint/no-unused-vars
+7:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+7:46  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+20:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+31:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+36:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/setup-database/route.ts
+17:9  Warning: 'tables' is never reassigned. Use 'const' instead.  prefer-const
+51:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+330:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+338:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+348:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/sheds/route.ts
+11:36  Warning: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+11:58  Warning: 'context' is defined but never used.  @typescript-eslint/no-unused-vars
+11:67  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+11:72  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+28:68  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/sheds/[id]/route.ts
+11:67  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+11:72  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+37:67  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+65:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+86:70  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/users/route.ts
+7:47  Warning: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+7:69  Warning: 'context' is defined but never used.  @typescript-eslint/no-unused-vars
+7:78  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+7:83  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+7:89  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+22:70  Warning: 'context' is defined but never used.  @typescript-eslint/no-unused-vars
+22:79  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+22:84  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+22:90  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/users/[id]/route.ts
+12:69  Warning: 'context' is defined but never used.  @typescript-eslint/no-unused-vars
+12:78  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+12:83  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+12:89  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+27:69  Warning: 'context' is defined but never used.  @typescript-eslint/no-unused-vars
+27:78  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+27:83  Warning: 'currentUser' is defined but never used.  @typescript-eslint/no-unused-vars
+27:96  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+59:81  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+59:99  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/vaccinations/alerts/route.ts
+12:10  Warning: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/vaccinations/mass/route.ts
+14:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/vaccinations/route.ts
+14:32  Warning: 'context' is defined but never used.  @typescript-eslint/no-unused-vars
+14:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:46  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+46:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/vaccine-types/route.ts
+11:36  Warning: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/cattle/page.tsx
+36:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+104:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+200:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+218:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/dashboard/page.tsx
+7:16  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+13:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+15:10  Warning: 'error' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+134:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+200:49  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+230:46  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+253:61  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+253:72  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./app/layout.tsx
+4:10  Warning: 'AppLogo' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/login/page.tsx
+5:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/milk/page.tsx
+23:19  Warning: 'setLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+33:42  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+74:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/reports/page.tsx
+74:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+108:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+138:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/reproduction/page.tsx
+164:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+171:9  Warning: 'selectedAnimalIndex' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/setup-database/page.tsx
+35:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+53:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/sheds/page.tsx
+112:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+120:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+154:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/vaccinations/page.tsx
+63:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/ui/Button.tsx
+56:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+56:81  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./lib/api.ts
+12:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+34:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./lib/auditService.ts
+16:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+16:46  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+106:35  Warning: '_entry' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./lib/auth.ts
+81:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./lib/cattleService.ts
+447:46  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+447:62  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+447:91  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+447:100  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+448:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+448:52  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./lib/genealogyService.ts
+173:62  Warning: 'depth' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./lib/milkProductionService.ts
+2:52  Warning: 'ProductionAlert' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./lib/reportsService.ts
+186:64  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./lib/reproductionService.ts
+26:53  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+40:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+46:78  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./lib/shedService.ts
+30:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./lib/types.ts
+139:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+139:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./lib/vaccinationService.ts
+10:3  Warning: 'CattleSex' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./lib/withAuth.ts
+16:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+18:48  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+89:60  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+90:59  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/25) ...
+   Generating static pages (6/25) 
+   Generating static pages (12/25) 
+   Generating static pages (18/25) 
+ Ô£ô Generating static pages (25/25)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                       Size  First Load JS
+Ôöî ãÆ /                                            209 B         103 kB
+Ôö£ ãÆ /_not-found                                  209 B         103 kB
+Ôö£ ãÆ /admin/audit                               2.06 kB         147 kB
+Ôö£ ãÆ /admin/users                               4.27 kB         150 kB
+Ôö£ ãÆ /api/auth/change-password                    209 B         103 kB
+Ôö£ ãÆ /api/auth/login                              209 B         103 kB
+Ôö£ ãÆ /api/auth/logout                             209 B         103 kB
+Ôö£ ãÆ /api/auth/me                                 209 B         103 kB
+Ôö£ ãÆ /api/cattle                                  209 B         103 kB
+Ôö£ ãÆ /api/cattle/[id]                             209 B         103 kB
+Ôö£ ãÆ /api/cattle/[id]/audit                       209 B         103 kB
+Ôö£ ãÆ /api/cattle/[id]/genealogy                   209 B         103 kB
+Ôö£ ãÆ /api/config                                  209 B         103 kB
+Ôö£ ãÆ /api/dashboard                               209 B         103 kB
+Ôö£ ãÆ /api/data                                    209 B         103 kB
+Ôö£ ãÆ /api/milk                                    209 B         103 kB
+Ôö£ ãÆ /api/milk/summary                            209 B         103 kB
+Ôö£ ãÆ /api/production-alerts                       209 B         103 kB
+Ôö£ ãÆ /api/reports/fiscal-inventory                209 B         103 kB
+Ôö£ ãÆ /api/reports/production-comparison           209 B         103 kB
+Ôö£ ãÆ /api/reports/sanitary-ica                    209 B         103 kB
+Ôö£ ãÆ /api/reproduction                            209 B         103 kB
+Ôö£ ãÆ /api/setup-database                          209 B         103 kB
+Ôö£ ãÆ /api/sheds                                   209 B         103 kB
+Ôö£ ãÆ /api/sheds/[id]                              209 B         103 kB
+Ôö£ ãÆ /api/users                                   209 B         103 kB
+Ôö£ ãÆ /api/users/[id]                              209 B         103 kB
+Ôö£ ãÆ /api/vaccinations                            209 B         103 kB
+Ôö£ ãÆ /api/vaccinations/alerts                     209 B         103 kB
+Ôö£ ãÆ /api/vaccinations/mass                       209 B         103 kB
+Ôö£ ãÆ /api/vaccinations/upload-certificate/[id]    209 B         103 kB
+Ôö£ ãÆ /api/vaccine-types                           209 B         103 kB
+Ôö£ ãÆ /cattle                                    4.82 kB         147 kB
+Ôö£ ãÆ /change-password                           2.65 kB         148 kB
+Ôö£ ãÆ /dashboard                                 3.22 kB         149 kB
+Ôö£ ãÆ /login                                     1.68 kB         140 kB
+Ôö£ ãÆ /milk                                      2.19 kB         105 kB
+Ôö£ ãÆ /reports                                   3.26 kB         149 kB
+Ôö£ ãÆ /reproduction                              4.11 kB         149 kB
+Ôö£ ãÆ /setup-database                             1.8 kB         104 kB
+Ôö£ ãÆ /sheds                                     3.91 kB         149 kB
+Ôöö ãÆ /vaccinations                              3.28 kB         106 kB
++ First Load JS shared by all                   102 kB
+  Ôö£ chunks/1255-b28ea36bf0cdbd65.js            46.2 kB
+  Ôö£ chunks/4bd1b696-f785427dddbba9fb.js        54.2 kB
+  Ôöö other shared chunks (total)                   2 kB
+
+
+ãÆ Middleware                                   34.1 kB
+
+ãÆ  (Dynamic)  server-rendered on demand
+
