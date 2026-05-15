@@ -21,6 +21,9 @@
 
 html {
   min-height: 100%;
+}
+
+html[data-scroll-behavior="smooth"] {
   scroll-behavior: smooth;
 }
 

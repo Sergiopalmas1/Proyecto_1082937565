@@ -27,6 +27,8 @@ export default function ShedsPage() {
     max_capacity: '',
   });
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -79,8 +81,11 @@ export default function ShedsPage() {
         max_capacity: parseInt(formData.max_capacity),
       };
 
-      const response = await fetch('/api/sheds', {
-        method: 'POST',
+      const method = editingId ? 'PUT' : 'POST';
+      const url = editingId ? `/api/sheds/${editingId}` : '/api/sheds';
+
+      const response = await fetch(url, {
+        method: method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submitData),
       });
@@ -88,8 +93,13 @@ export default function ShedsPage() {
       const data = await response.json();
 
       if (response.ok) {
-        setSheds([...sheds, { ...data.shed, current_count: 0 }]);
+        if (editingId) {
+          setSheds(sheds.map(s => s.id === editingId ? { ...data.shed, current_count: s.current_count } : s));
+        } else {
+          setSheds([...sheds, { ...data.shed, current_count: 0 }]);
+        }
         setShowCreateModal(false);
+        setEditingId(null);
         setFormData({
           name: '',
           type: 'pastizal',
@@ -108,10 +118,56 @@ export default function ShedsPage() {
         }
       }
     } catch (error) {
-      setFormErrors({ general: 'Error creando bodega' });
+      setFormErrors({ general: 'Error guardando bodega' });
     } finally {
       setCreating(false);
     }
+  };
+
+  const handleEditShed = (shed: ShedWithCount) => {
+    setEditingId(shed.id);
+    setFormData({
+      name: shed.name,
+      type: shed.type,
+      surface_m2: shed.surface_m2?.toString() || '',
+      max_capacity: shed.max_capacity.toString(),
+    });
+    setFormErrors({});
+    setShowCreateModal(true);
+  };
+
+  const handleDeleteShed = async (id: string) => {
+    if (!confirm('¿Estás seguro de que deseas eliminar esta bodega?')) return;
+
+    setDeleting(id);
+    try {
+      const response = await fetch(`/api/sheds/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setSheds(sheds.filter(s => s.id !== id));
+      } else {
+        const data = await response.json();
+        alert('Error eliminando bodega: ' + (data.error || 'Error desconocido'));
+      }
+    } catch (error) {
+      alert('Error eliminando bodega');
+    } finally {
+      setDeleting(null);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowCreateModal(false);
+    setEditingId(null);
+    setFormData({
+      name: '',
+      type: 'pastizal',
+      surface_m2: '',
+      max_capacity: '',
+    });
+    setFormErrors({});
   };
 
   const getTypeLabel = (type: string) => {
@@ -203,11 +259,22 @@ export default function ShedsPage() {
                     <Td>
                       {user.role === 'admin' ? (
                         <div className="flex gap-2">
-                          <Button variant="secondary" size="sm">
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            onClick={() => handleEditShed(shed)}
+                          >
+                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                             Editar
                           </Button>
-                          <Button variant="danger" size="sm">
-                            Eliminar
+                          <Button 
+                            variant="danger" 
+                            size="sm"
+                            onClick={() => handleDeleteShed(shed.id)}
+                            disabled={deleting === shed.id}
+                          >
+                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                            {deleting === shed.id ? 'Eliminando...' : 'Eliminar'}
                           </Button>
                         </div>
                       ) : (
@@ -224,8 +291,8 @@ export default function ShedsPage() {
         {/* Modal para crear bodega */}
         <Modal
           isOpen={showCreateModal}
-          onClose={() => setShowCreateModal(false)}
-          title="Nueva Bodega"
+          onClose={handleCloseModal}
+          title={editingId ? 'Editar Bodega' : 'Nueva Bodega'}
         >
           <div className="space-y-4">
             {formErrors.general && (
@@ -291,13 +358,14 @@ export default function ShedsPage() {
             <div className="flex justify-end gap-3 pt-4">
               <Button
                 variant="secondary"
-                onClick={() => setShowCreateModal(false)}
+                onClick={handleCloseModal}
                 disabled={creating}
               >
                 Cancelar
               </Button>
               <Button
                 onClick={handleCreateShed}
+                disabled={creating}
                 disabled={creating}
               >
                 {creating ? 'Creando...' : 'Crear Bodega'}
