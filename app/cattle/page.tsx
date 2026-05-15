@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, Button, Badge, Table, Thead, Tbody, Tr, Th, Td, EmptyState, Modal, useToast } from '@/components/ui';
 import { CattleWithDetails } from '@/lib/types';
