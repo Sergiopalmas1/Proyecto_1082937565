@@ -41,7 +41,11 @@ const navigationByRole = {
 export function AppLayout({ user, children }: AppLayoutProps) {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const navigation = navigationByRole[user.role];
+  const navigation = user?.role ? navigationByRole[user.role] : [];
+
+  if (!user || !user.role) {
+    return <div>Error: Usuario no válido</div>;
+  }
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });

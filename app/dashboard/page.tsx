@@ -52,6 +52,12 @@ export default function DashboardPage() {
     );
   }
 
+  if (!user || !user.role) {
+    return (
+      <EmptyState title="Error" description="No se pudo cargar la información del usuario. Intenta iniciar sesión nuevamente." />
+    );
+  }
+
   return (
     <AppLayout user={user}>
       <div className="space-y-8">
