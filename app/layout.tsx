@@ -25,10 +25,6 @@ export default function RootLayout({
         <main className="min-h-[80vh] max-w-7xl mx-auto px-4 py-6">
           <ToastProvider>{children}</ToastProvider>
         </main>
-        <footer className="border-t border-emerald-900/40 mt-8 py-6 text-center text-sm text-emerald-300">
-          © {new Date().getFullYear()} SIG Bovino — Proyecto
-        </footer>
-        </main>
         <footer className="border-t border-[#e6e1d7] mt-8 py-6 text-center text-sm text-[#6B5635]">
           © {new Date().getFullYear()} SIG Bovino — Proyecto
         </footer>
