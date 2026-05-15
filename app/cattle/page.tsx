@@ -31,6 +31,7 @@ function CattlePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [editingCattle, setEditingCattle] = useState<CattleWithDetails | null>(null);
   const [user, setUser] = useState<any>(null);
   const [searchInput, setSearchInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -73,42 +74,42 @@ function CattlePage() {
     return () => window.clearTimeout(timer);
   }, [router, searchInput]);
 
-  useEffect(() => {
-    const fetchCattle = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+  const loadCattle = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-        const queryString = new URLSearchParams();
-        if (searchQuery) queryString.set('q', searchQuery);
-        queryString.set('page', String(page));
-        queryString.set('pageSize', String(PAGE_SIZE));
+      const queryString = new URLSearchParams();
+      if (searchQuery) queryString.set('q', searchQuery);
+      queryString.set('page', String(page));
+      queryString.set('pageSize', String(PAGE_SIZE));
 
-        const response = await apiFetch<CattleListResponse>(`/api/cattle?${queryString.toString()}`);
+      const response = await apiFetch<CattleListResponse>(`/api/cattle?${queryString.toString()}`);
 
-        if (!response.ok) {
-          if (response.status === 401) {
-            router.push('/login');
-            return;
-          }
-          if (response.status === 403) {
-            showToast(response.error || 'Acceso denegado', 'error');
-            return;
-          }
-          throw new Error(response.error || 'Error cargando animales');
+      if (!response.ok) {
+        if (response.status === 401) {
+          router.push('/login');
+          return;
         }
-
-        setCattle(response.data?.cattle || []);
-        setTotalCount(response.data?.total || 0);
-      } catch (err: any) {
-        setError(err.message || 'Error al cargar animales');
-      } finally {
-        setLoading(false);
+        if (response.status === 403) {
+          showToast(response.error || 'Acceso denegado', 'error');
+          return;
+        }
+        throw new Error(response.error || 'Error cargando animales');
       }
-    };
 
-    fetchCattle();
+      setCattle(response.data?.cattle || []);
+      setTotalCount(response.data?.total || 0);
+    } catch (err: any) {
+      setError(err.message || 'Error al cargar animales');
+    } finally {
+      setLoading(false);
+    }
   }, [page, searchQuery, router, showToast]);
+
+  useEffect(() => {
+    loadCattle();
+  }, [loadCattle]);
 
   const fetchUser = async () => {
     try {
@@ -126,41 +127,77 @@ function CattlePage() {
     fetchUser();
   }, []);
 
-  const handleCreateCattle = async (e: React.FormEvent) => {
+  const resetForm = () => {
+    setFormData({
+      code: '',
+      name: '',
+      sex: 'hembra',
+      birth_date: '',
+      breed: '',
+      color: '',
+      weight_kg: undefined,
+      shed_id: '',
+      dam_id: '',
+      sire_id: '',
+      estimated_value: undefined,
+      notes: '',
+    });
+  };
+
+  const openCreateModal = () => {
+    resetForm();
+    setEditingCattle(null);
+    setShowCreateModal(true);
+  };
+
+  const openEditModal = (animal: CattleWithDetails) => {
+    setFormData({
+      code: animal.code,
+      name: animal.name || '',
+      sex: animal.sex,
+      birth_date: animal.birth_date || '',
+      breed: animal.breed || '',
+      color: animal.color || '',
+      weight_kg: animal.weight_kg ?? undefined,
+      shed_id: animal.shed_id || '',
+      dam_id: animal.dam_id || '',
+      sire_id: animal.sire_id || '',
+      estimated_value: animal.estimated_value ?? undefined,
+      notes: animal.notes || '',
+    });
+    setEditingCattle(animal);
+    setShowCreateModal(true);
+  };
+
+  const handleSaveCattle = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await apiFetch<CattleWithDetails>('/api/cattle', {
-        method: 'POST',
+      const endpoint = editingCattle ? `/api/cattle/${editingCattle.id}` : '/api/cattle';
+      const method = editingCattle ? 'PUT' : 'POST';
+
+      const response = await apiFetch<CattleWithDetails>(endpoint, {
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        showToast(response.error || 'Error al crear animal', 'error');
+        showToast(response.error || `Error al ${editingCattle ? 'actualizar' : 'crear'} animal`, 'error');
         return;
       }
 
-      showToast('Animal registrado exitosamente', 'success');
+      showToast(
+        editingCattle ? 'Animal actualizado exitosamente' : 'Animal registrado exitosamente',
+        'success'
+      );
       setShowCreateModal(false);
-      setFormData({
-        code: '',
-        name: '',
-        sex: 'hembra',
-        birth_date: '',
-        breed: '',
-        color: '',
-        weight_kg: undefined,
-        shed_id: '',
-        dam_id: '',
-        sire_id: '',
-        estimated_value: undefined,
-        notes: '',
-      });
+      setEditingCattle(null);
+      resetForm();
       setPage(1);
-      router.replace('/cattle?page=1');
+      await loadCattle();
     } catch (err: any) {
-      showToast(err.message || 'Error al crear animal', 'error');
+      showToast(err.message || `Error al ${editingCattle ? 'actualizar' : 'crear'} animal`, 'error');
     }
   };
 
@@ -230,7 +267,7 @@ function CattlePage() {
         </div>
 
         {user?.role === 'admin' && (
-          <Button onClick={() => setShowCreateModal(true)}>Nuevo Animal</Button>
+          <Button onClick={openCreateModal}>Nuevo Animal</Button>
         )}
       </div>
 
@@ -351,7 +388,7 @@ function CattlePage() {
                       </Button>
                       {user?.role === 'admin' && (
                         <>
-                          <Button variant="secondary" size="sm">
+                          <Button variant="secondary" size="sm" onClick={() => openEditModal(animal)}>
                             Editar
                           </Button>
                           <Button variant="danger" size="sm" onClick={() => handleDeleteCattle(animal.id)}>
@@ -390,8 +427,15 @@ function CattlePage() {
         </div>
       </div>
 
-      <Modal isOpen={showCreateModal} onClose={() => setShowCreateModal(false)} title="Registrar Nuevo Animal">
-        <form onSubmit={handleCreateCattle} className="space-y-4">
+      <Modal
+        isOpen={showCreateModal}
+        onClose={() => {
+          setShowCreateModal(false);
+          setEditingCattle(null);
+        }}
+        title={editingCattle ? 'Editar Animal' : 'Registrar Nuevo Animal'}
+      >
+        <form onSubmit={handleSaveCattle} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Código *</label>
@@ -501,10 +545,19 @@ function CattlePage() {
           </div>
 
           <div className="flex justify-end gap-3 pt-4">
-            <Button type="button" variant="secondary" onClick={() => setShowCreateModal(false)}>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => {
+                setShowCreateModal(false);
+                setEditingCattle(null);
+              }}
+            >
               Cancelar
             </Button>
-            <Button type="submit">Registrar Animal</Button>
+            <Button type="submit">
+              {editingCattle ? 'Guardar cambios' : 'Registrar Animal'}
+            </Button>
           </div>
         </form>
       </Modal>
