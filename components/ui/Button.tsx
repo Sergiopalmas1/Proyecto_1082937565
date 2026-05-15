@@ -29,12 +29,12 @@ export function Button({
 
   const variantStyle = {
     primary:
-      'bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 shadow-md hover:shadow-lg focus:ring-green-500',
+      'bg-gradient-to-r from-emerald-600 to-emerald-700 text-white hover:from-emerald-700 hover:to-emerald-800 shadow-sm hover:shadow-md focus:ring-emerald-400',
     secondary:
       'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-400 border border-gray-300',
     danger: 'bg-red-600 text-white hover:bg-red-700 shadow-md hover:shadow-lg focus:ring-red-500',
     success: 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-md hover:shadow-lg focus:ring-emerald-500',
-    ghost: 'bg-transparent text-green-700 hover:bg-green-50 focus:ring-green-400',
+    ghost: 'bg-transparent text-emerald-700 hover:bg-emerald-50 focus:ring-emerald-400',
   }[variant];
 
   return (

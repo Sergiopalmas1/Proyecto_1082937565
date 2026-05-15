@@ -2,12 +2,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #020617;
-  --surface: rgba(15, 23, 42, 0.82);
-  --text-primary: #e2e8f0;
-  --text-secondary: #94a3b8;
-  --accent: #38bdf8;
-  --accent-soft: rgba(56, 189, 248, 0.16);
+  --background: #F5EFE0; /* warm paper */
+  --surface: #FFFFFF;
+  --text-primary: #2D2B21; /* dark brown */
+  --text-secondary: #6B5635;
+  --accent: #2F855A; /* deep green */
+  --accent-soft: rgba(47, 133, 90, 0.12);
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Manrope', system-ui, sans-serif;
 }
@@ -31,8 +31,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(circle at top, rgba(56, 189, 248, 0.14), transparent 28%),
-    linear-gradient(180deg, #020617 0%, #050b1b 100%);
+  background: linear-gradient(180deg, var(--background) 0%, #efe7d8 100%);
   color: var(--text-primary);
   font-family: var(--font-body), system-ui, sans-serif;
 }
@@ -48,6 +47,10 @@ a {
 }
 
 ::selection {
-  background: rgba(56, 189, 248, 0.35);
-  color: #f8fafc;
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+.header-shadow {
+  box-shadow: 0 2px 8px rgba(45,43,33,0.04);
 }
