@@ -133,15 +133,9 @@ export default function LoginPage() {
                 )}
               </button>
             </form>
-                }
-              }}
-            >
-              {loading ? 'Ingresando...' : 'Ingresar al sistema'}
-            </button>
-          </form>
 
           {/* Footer */}
-          <p className="text-xs text-center mt-6" style={{ color: '#6B5635' }}>
+          <p className="text-xs text-center mt-6 text-gray-500">
             Sistema de Inventario Bovino — v2.1
           </p>
         </div>
