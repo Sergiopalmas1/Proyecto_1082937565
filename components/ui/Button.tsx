@@ -14,6 +14,7 @@ export function Button({
   variant = 'primary',
   size = 'md',
   loading = false,
+  icon,
   children,
   disabled,
   ...props
@@ -52,9 +53,7 @@ export function Button({
         </span>
       ) : (
         <span className="flex items-center gap-2">
-          {props['aria-disabled'] || props.disabled ? null : null}
-          {/** render icon when provided */}
-          {(props as any).icon ? <span className="flex items-center">{(props as any).icon}</span> : null}
+          {icon ? <span className="flex items-center">{icon}</span> : null}
           {children}
         </span>
       )}
