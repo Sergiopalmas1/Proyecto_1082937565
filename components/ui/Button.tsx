@@ -6,6 +6,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'danger' | 'ghost' | 'success';
   size?: 'sm' | 'md' | 'lg';
   loading?: boolean;
+  icon?: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -46,11 +47,16 @@ export function Button({
     >
       {loading ? (
         <span className="flex items-center gap-2">
-          <span className="animate-spin">⟳</span>
+          <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" strokeOpacity="0.25" /><path d="M22 12a10 10 0 0 0-10-10" /></svg>
           Cargando...
         </span>
       ) : (
-        children
+        <span className="flex items-center gap-2">
+          {props['aria-disabled'] || props.disabled ? null : null}
+          {/** render icon when provided */}
+          {(props as any).icon ? <span className="flex items-center">{(props as any).icon}</span> : null}
+          {children}
+        </span>
       )}
     </button>
   );

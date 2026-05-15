@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ToastProvider } from "@/components/ui";
+import { AppLogo } from "@/components/ui/Icons";
 
 export const dynamic = 'force-dynamic';
 
@@ -17,8 +18,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className="h-full antialiased">
-      <body className="min-h-full bg-[#F5EFE0] text-slate-900">
-        <ToastProvider>{children}</ToastProvider>
+      <body className="min-h-full bg-[#0b1220] text-emerald-100">
+        <header className="bg-gradient-to-r from-emerald-900/30 via-transparent to-transparent border-b border-emerald-800">
+          <div className="max-w-7xl mx-auto px-4 py-3"><AppLogo /></div>
+        </header>
+        <main className="min-h-[80vh] max-w-7xl mx-auto px-4 py-6">
+          <ToastProvider>{children}</ToastProvider>
+        </main>
+        <footer className="border-t border-emerald-900/40 mt-8 py-6 text-center text-sm text-emerald-300">
+          © {new Date().getFullYear()} SIG Bovino — Proyecto
+        </footer>
       </body>
     </html>
   );
