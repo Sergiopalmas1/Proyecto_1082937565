@@ -366,7 +366,6 @@ export default function ShedsPage() {
               <Button
                 onClick={handleCreateShed}
                 disabled={creating}
-                disabled={creating}
               >
                 {creating ? 'Creando...' : 'Crear Bodega'}
               </Button>
