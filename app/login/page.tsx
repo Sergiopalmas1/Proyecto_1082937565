@@ -32,12 +32,16 @@ export default function LoginPage() {
         return;
       }
 
-      if (data.user?.must_change_password) {
-        router.push('/change-password');
-      } else {
-        router.push('/dashboard');
-      }
+      // Pequeño delay para asegurar que la cookie de sesión se establece correctamente
+      setTimeout(() => {
+        if (data.user?.must_change_password) {
+          router.push('/change-password');
+        } else {
+          router.push('/dashboard');
+        }
+      }, 100);
     } catch (err) {
+      console.error('Login error:', err);
       setError('Error de conexión. Intenta de nuevo.');
       setLoading(false);
     }

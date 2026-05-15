@@ -12,34 +12,80 @@ export default function DashboardPage() {
   const [user, setUser] = useState<SafeUser | null>(null);
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchData = async () => {
       try {
+        setError(null);
         // 1. Obtener usuario actual
-        const userResponse = await fetch('/api/auth/me');
+        const userResponse = await fetch('/api/auth/me', {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
         if (!userResponse.ok) {
-          router.push('/login');
+          if (isMounted) {
+            setUser(null);
+            setLoading(false);
+            // Redirigir después de un pequeño delay para evitar problemas de contexto
+            setTimeout(() => {
+              if (isMounted) router.push('/login');
+            }, 100);
+          }
           return;
         }
-        const userData = await userResponse.json();
-        setUser(userData.user);
 
-        // 2. Obtener datos del dashboard
-        const dashResponse = await fetch('/api/dashboard');
-        if (dashResponse.ok) {
-          const dashData = await dashResponse.json();
-          setDashboardData(dashData.data);
+        const userData = await userResponse.json();
+        if (isMounted) {
+          setUser(userData.user);
+
+          // 2. Obtener datos del dashboard
+          try {
+            const dashResponse = await fetch('/api/dashboard', {
+              credentials: 'include',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+            if (dashResponse.ok) {
+              const dashData = await dashResponse.json();
+              if (isMounted) {
+                setDashboardData(dashData.data);
+              }
+            }
+          } catch (dashError) {
+            console.error('Error cargando datos del dashboard:', dashError);
+            if (isMounted) {
+              setDashboardData(null);
+            }
+          } finally {
+            if (isMounted) {
+              setLoading(false);
+            }
+          }
         }
       } catch (error) {
-        console.error('Error:', error);
-        router.push('/login');
-      } finally {
-        setLoading(false);
+        console.error('Error fetching auth:', error);
+        if (isMounted) {
+          setError('Error al cargar el dashboard');
+          setLoading(false);
+          setTimeout(() => {
+            if (isMounted) router.push('/login');
+          }, 100);
+        }
       }
     };
 
     fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, [router]);
 
   if (loading || !user) {
