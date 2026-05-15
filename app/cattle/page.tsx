@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, Button, Badge, Table, Thead, Tbody, Tr, Th, Td, EmptyState, Modal, useToast } from '@/components/ui';
+import { CowIcon, StatsIcon, PlusIcon } from '@/components/ui/Icons';
 import { CattleWithDetails } from '@/lib/types';
 import { CreateCattleRequest } from '@/lib/validators';
 import { apiFetch } from '@/lib/api';
@@ -260,44 +261,80 @@ function CattlePage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Gestión de Animales</h1>
-          <p className="text-gray-600 mt-1">Administra el inventario bovino de tu finca.</p>
-        </div>
+      {/* Header mejorado */}
+      <div className="bg-gradient-to-r from-emerald-600 to-green-600 rounded-xl p-8 text-white shadow-lg">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="bg-white/20 p-3 rounded-lg">
+              <CowIcon className="w-8 h-8 text-white" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold">Gestión de Animales</h1>
+              <p className="text-emerald-100 mt-1">Administra tu inventario bovino de manera eficiente</p>
+            </div>
+          </div>
 
-        {user?.role === 'admin' && (
-          <Button onClick={openCreateModal}>Nuevo Animal</Button>
-        )}
+          {user?.role === 'admin' && (
+            <Button 
+              onClick={openCreateModal}
+              className="flex items-center gap-2 bg-white text-emerald-600 hover:bg-emerald-50"
+            >
+              <PlusIcon className="w-5 h-5" />
+              Nuevo Animal
+            </Button>
+          )}
+        </div>
       </div>
 
+      {/* Tarjetas de estadísticas mejoradas */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-green-600">{totalCount}</div>
-            <div className="text-sm text-gray-600">Total Animales</div>
-          </div>
-        </Card>
-        <Card>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">
-              {cattle.filter((c) => c.status === 'activo').length}
+        <Card className="border-l-4 border-l-emerald-500">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm text-gray-600 font-medium">Total Animales</div>
+              <div className="text-3xl font-bold text-emerald-600 mt-2">{totalCount}</div>
             </div>
-            <div className="text-sm text-gray-600">Activos</div>
+            <StatsIcon className="w-12 h-12 text-emerald-200" />
           </div>
         </Card>
-        <Card>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-purple-600">
-              {cattle.filter((c) => c.sex === 'hembra' && c.status === 'activo').length}
+        <Card className="border-l-4 border-l-blue-500">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm text-gray-600 font-medium">Activos</div>
+              <div className="text-3xl font-bold text-blue-600 mt-2">
+                {cattle.filter((c) => c.status === 'activo').length}
+              </div>
             </div>
-            <div className="text-sm text-gray-600">Hembras Activas</div>
+            <CowIcon className="w-12 h-12 text-blue-200" />
           </div>
         </Card>
-        <Card>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-orange-600">
-              {cattle.filter((c) => c.offspring_count && c.offspring_count > 0).length}
+        <Card className="border-l-4 border-l-purple-500">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm text-gray-600 font-medium">Hembras Activas</div>
+              <div className="text-3xl font-bold text-purple-600 mt-2">
+                {cattle.filter((c) => c.sex === 'hembra' && c.status === 'activo').length}
+              </div>
+            </div>
+            <svg className="w-12 h-12 text-purple-200" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2a5 5 0 100 10 5 5 0 000-10zM2 22a10 10 0 0120 0H2z" />
+            </svg>
+          </div>
+        </Card>
+        <Card className="border-l-4 border-l-orange-500">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm text-gray-600 font-medium">Con Crías</div>
+              <div className="text-3xl font-bold text-orange-600 mt-2">
+                {cattle.filter((c) => c.offspring_count && c.offspring_count > 0).length}
+              </div>
+            </div>
+            <svg className="w-12 h-12 text-orange-200" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 17a7 7 0 110-14 7 7 0 010 14z" />
+            </svg>
+          </div>
+        </Card>
+      </div>
             </div>
             <div className="text-sm text-gray-600">Con Crías</div>
           </div>

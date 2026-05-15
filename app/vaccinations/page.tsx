@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { SyringeIcon, AlertIcon, CheckIcon, PlusIcon } from '@/components/ui/Icons';
 import { VaccineType, VaccinationWithCattle, VaccinationAlert } from '@/lib/types';
 
 interface Cattle {
@@ -173,49 +174,62 @@ export default function VaccinationsPage() {
 
   return (
     <div className="container mx-auto px-4 py-6 max-w-6xl">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">
-          Gestión de Vacunaciones
-        </h1>
-
-        {/* Alertas */}
-        {alerts.length > 0 && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
-            <h3 className="text-lg font-medium text-yellow-800 mb-2">
-              ⚠️ Próximas Vacunaciones
-            </h3>
-            <div className="space-y-2">
-              {alerts.map(alert => (
-                <div key={`${alert.cattle_id}-${alert.vaccine_type_name}`} className="flex items-center justify-between bg-white p-3 rounded border">
-                  <div>
-                    <span className="font-medium">{alert.cattle_code}</span>
-                    {alert.cattle_name && <span className="text-gray-600"> - {alert.cattle_name}</span>}
-                    <span className="text-yellow-600 ml-2">
-                      {alert.vaccine_type_name} vence en {alert.days_until_due} días ({alert.next_dose_date})
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* Header mejorado */}
+      <div className="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl p-8 text-white shadow-lg mb-6">
+        <div className="flex items-center gap-4">
+          <div className="bg-white/20 p-3 rounded-lg">
+            <SyringeIcon className="w-8 h-8 text-white" />
           </div>
-        )}
+          <div>
+            <h1 className="text-4xl font-bold">Gestión de Vacunaciones</h1>
+            <p className="text-blue-100 mt-1">Controla el calendario de vacunación de tu hato bovino</p>
+          </div>
+        </div>
+      </div>
 
-        {/* Formulario de vacunación */}
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <h2 className="text-lg font-medium text-gray-900 mb-4">
+      {/* Alertas mejoradas */}
+      {alerts.length > 0 && (
+        <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-l-4 border-amber-500 rounded-lg p-6 mb-6 shadow-sm">
+          <div className="flex items-start gap-3">
+            <AlertIcon className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-amber-900 mb-3">
+                Próximas Vacunaciones ({alerts.length})
+              </h3>
+              <div className="space-y-2">
+                {alerts.map(alert => (
+                  <div key={`${alert.cattle_id}-${alert.vaccine_type_name}`} className="flex items-center justify-between bg-white p-3 rounded border border-amber-200 hover:border-amber-400 transition">
+                    <div className="flex-1">
+                      <span className="font-semibold text-gray-900">{alert.cattle_code}</span>
+                      {alert.cattle_name && <span className="text-gray-600"> - {alert.cattle_name}</span>}
+                    </div>
+                    <div className="text-right">
+                      <span className="text-amber-700 font-medium text-sm">{alert.vaccine_type_name}</span>
+                      <div className="text-amber-600 text-xs">Vence en {alert.days_until_due} días</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+          </div>
+            </div>
+          )}
+
+        {/* Formulario de vacunación mejorado */}
+        <div className="bg-white rounded-xl shadow-md p-8 mb-6 border-t-4 border-t-blue-500">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+            <SyringeIcon className="w-6 h-6 text-blue-600" />
             Registrar Vacunación
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Tipo de Vacuna *
               </label>
               <select
                 value={selectedVaccineType}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedVaccineType(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-              >
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 <option value="">Seleccionar vacuna</option>
                 {vaccineTypes.map(vaccine => (
                   <option key={vaccine.id} value={vaccine.id}>
