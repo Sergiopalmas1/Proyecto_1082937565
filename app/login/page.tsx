@@ -134,10 +134,11 @@ export default function LoginPage() {
               </button>
             </form>
 
-          {/* Footer */}
-          <p className="text-xs text-center mt-6 text-gray-500">
-            Sistema de Inventario Bovino — v2.1
-          </p>
+            {/* Footer */}
+            <p className="text-xs text-center mt-6 text-gray-500">
+              Sistema de Inventario Bovino — v2.1
+            </p>
+          </div>
         </div>
       </motion.div>
     </div>
