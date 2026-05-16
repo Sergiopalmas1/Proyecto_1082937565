@@ -55,6 +55,7 @@ export default function AuditPage() {
         </h1>
 
         <div 
+          data-audit-container
           className="border border-slate-200 dark:border-slate-700 rounded-xl p-6"
           style={{
             backgroundColor: 'white',
@@ -62,8 +63,12 @@ export default function AuditPage() {
           }}
         >
           <style>{`
-            html.dark [data-audit-card] {
+            html.dark [data-audit-container] {
               background-color: #0f172a !important;
+              color: white !important;
+            }
+            html.dark [data-audit-card] {
+              background-color: transparent !important;
               color: white !important;
             }
           `}</style>
