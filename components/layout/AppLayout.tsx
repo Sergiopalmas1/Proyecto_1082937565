@@ -96,25 +96,25 @@ export function AppLayout({ user, children }: AppLayoutProps) {
     <ToastProvider>
       <div className="min-h-screen flex flex-col md:flex-row bg-[var(--page-background)] transition-colors duration-300">
         {/* Sidebar - Desktop */}
-        <aside className="hidden md:flex md:w-64 flex-col border-r border-[var(--border)] bg-[var(--surface)] shadow-lg transition-colors duration-300">
-          <div className="p-6 border-b border-[var(--border)] bg-[var(--surface-soft)]">
-            <AppLogo className="text-emerald-900 dark:text-emerald-200" />
+        <aside className="hidden md:flex md:w-64 flex-col border-r border-[var(--border)] bg-emerald-50 dark:bg-slate-900 shadow-lg transition-colors duration-300">
+          <div className="p-6 border-b border-emerald-200 dark:border-slate-700 bg-emerald-100 dark:bg-slate-800">
+            <AppLogo className="text-emerald-900 dark:text-emerald-300" />
           </div>
           <nav className="flex-1 space-y-1 p-4">
             {navigation.map((item) => (
               <Link key={item.href} href={item.href}>
-                <div className="px-4 py-3 rounded-2xl hover:bg-emerald-100 transition-colors duration-200 flex items-center gap-3 text-slate-700 hover:text-emerald-800 dark:text-slate-100 dark:hover:bg-slate-800 dark:hover:text-emerald-300">
-                  <item.icon className="w-5 h-5 text-emerald-600" />
+                <div className="px-4 py-3 rounded-2xl hover:bg-emerald-200 dark:hover:bg-slate-700 transition-colors duration-200 flex items-center gap-3 text-emerald-900 dark:text-emerald-100 hover:text-emerald-900 dark:hover:text-emerald-200">
+                  <item.icon className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   <span className="font-medium">{item.label}</span>
                 </div>
               </Link>
             ))}
           </nav>
 
-          <div className="p-4 border-t border-[var(--border)] space-y-3 bg-[var(--surface-soft)] dark:bg-slate-800">
-            <div className="px-4 py-3 rounded-lg bg-[var(--surface)] dark:bg-slate-900">
-              <p className="font-semibold text-slate-900 dark:text-slate-100">{user.name}</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 capitalize">{user.role}</p>
+          <div className="p-4 border-t border-emerald-200 dark:border-slate-700 space-y-3 bg-emerald-100 dark:bg-slate-800">
+            <div className="px-4 py-3 rounded-lg bg-emerald-200 dark:bg-slate-700">
+              <p className="font-semibold text-emerald-900 dark:text-emerald-100">{user.name}</p>
+              <p className="text-xs text-emerald-700 dark:text-emerald-300 mt-1 capitalize">{user.role}</p>
             </div>
             <button
               onClick={handleLogout}
@@ -128,11 +128,11 @@ export function AppLayout({ user, children }: AppLayoutProps) {
         {/* Main content */}
         <div className="flex-1 flex flex-col pb-20 md:pb-0">
           {/* Header - Mobile */}
-          <header className="md:hidden border-b border-[var(--border)] bg-[var(--surface)] shadow-sm p-4 flex justify-between items-center transition-colors duration-300">
-            <AppLogo className="text-emerald-900 dark:text-emerald-200" />
+          <header className="md:hidden border-b border-emerald-200 dark:border-slate-700 bg-emerald-50 dark:bg-slate-900 shadow-sm p-4 flex justify-between items-center transition-colors duration-300">
+            <AppLogo className="text-emerald-900 dark:text-emerald-300" />
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-2xl text-slate-700 hover:text-emerald-700 transition-colors dark:text-slate-200 dark:hover:text-emerald-300"
+              className="text-2xl text-emerald-900 hover:text-emerald-700 dark:text-emerald-200 dark:hover:text-emerald-300 transition-colors"
               aria-label="Abrir menú"
             >
               ☰
@@ -141,14 +141,14 @@ export function AppLayout({ user, children }: AppLayoutProps) {
 
           {/* Mobile nav */}
           {sidebarOpen && (
-            <nav className="md:hidden space-y-1 p-4 bg-[var(--surface)] border-b border-[var(--border)] transition-colors duration-300">
+            <nav className="md:hidden space-y-1 p-4 bg-emerald-100 dark:bg-slate-800 border-b border-emerald-200 dark:border-slate-700 transition-colors duration-300">
               {navigation.map((item) => (
                 <Link key={item.href} href={item.href}>
                   <div
-                    className="px-4 py-3 rounded-lg hover:bg-emerald-50 transition-colors flex items-center gap-3 text-slate-700 hover:text-emerald-700 dark:text-slate-100 dark:hover:bg-slate-800 dark:hover:text-emerald-300"
+                    className="px-4 py-3 rounded-lg hover:bg-emerald-200 dark:hover:bg-slate-700 transition-colors flex items-center gap-3 text-emerald-900 dark:text-emerald-100 hover:text-emerald-900 dark:hover:text-emerald-200"
                     onClick={() => setSidebarOpen(false)}
                   >
-                    <item.icon className="w-5 h-5 text-emerald-600" />
+                    <item.icon className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                     <span className="font-medium">{item.label}</span>
                   </div>
                 </Link>
@@ -163,7 +163,7 @@ export function AppLayout({ user, children }: AppLayoutProps) {
                 {showDashboardButton && (
                   <Link
                     href="/dashboard"
-                    className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+                    className="inline-flex items-center gap-2 rounded-full border border-emerald-300 dark:border-emerald-600 bg-emerald-50 dark:bg-slate-800 px-3 py-1.5 text-sm font-medium text-emerald-900 dark:text-emerald-100 shadow-sm transition hover:bg-emerald-100 dark:hover:bg-slate-700"
                   >
                     <ArrowLeftIcon className="w-4 h-4" />
                     Dashboard
@@ -174,7 +174,7 @@ export function AppLayout({ user, children }: AppLayoutProps) {
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+                className="inline-flex items-center gap-2 rounded-full border border-emerald-300 dark:border-emerald-600 bg-emerald-50 dark:bg-slate-800 px-3 py-1.5 text-sm font-medium text-emerald-900 dark:text-emerald-100 shadow-sm transition hover:bg-emerald-100 dark:hover:bg-slate-700"
               >
                 {isDarkMode ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
                 {isDarkMode ? 'Modo claro' : 'Modo oscuro'}
@@ -186,12 +186,12 @@ export function AppLayout({ user, children }: AppLayoutProps) {
 
         {/* Bottom nav - Mobile */}
         <nav
-          className="md:hidden fixed bottom-0 left-0 right-0 border-t border-[var(--border)] bg-[var(--surface)] shadow-lg flex justify-around transition-colors duration-300"
+          className="md:hidden fixed bottom-0 left-0 right-0 border-t border-emerald-200 dark:border-slate-700 bg-emerald-50 dark:bg-slate-900 shadow-lg flex justify-around transition-colors duration-300"
         >
           {navigation.slice(0, 5).map((item) => (
             <Link key={item.href} href={item.href} className="flex-1">
-              <div className="flex flex-col items-center justify-center py-3 text-xs hover:bg-emerald-50 transition-colors text-slate-700 hover:text-emerald-700">
-                <item.icon className="w-5 h-5 mb-1 text-emerald-600" />
+              <div className="flex flex-col items-center justify-center py-3 text-xs hover:bg-emerald-200 dark:hover:bg-slate-800 transition-colors text-emerald-900 dark:text-emerald-100 hover:text-emerald-900 dark:hover:text-emerald-200">
+                <item.icon className="w-5 h-5 mb-1 text-emerald-600 dark:text-emerald-400" />
                 <span>{item.label}</span>
               </div>
           </Link>
