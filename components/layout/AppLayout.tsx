@@ -163,7 +163,7 @@ export function AppLayout({ user, children }: AppLayoutProps) {
                 {showDashboardButton && (
                   <Link
                     href="/dashboard"
-                    className="inline-flex items-center gap-2 rounded-full border border-emerald-300 dark:border-emerald-600 bg-emerald-50 dark:bg-slate-800 px-3 py-1.5 text-sm font-medium text-emerald-900 dark:text-emerald-100 shadow-sm transition hover:bg-emerald-100 dark:hover:bg-slate-700"
+                    className="inline-flex items-center gap-2 rounded-full border border-emerald-600 dark:border-emerald-600 bg-emerald-600 dark:bg-slate-700 px-3 py-1.5 text-sm font-medium text-white dark:text-white shadow-sm transition hover:bg-emerald-700 dark:hover:bg-slate-600"
                   >
                     <ArrowLeftIcon className="w-4 h-4" />
                     Dashboard
@@ -174,7 +174,7 @@ export function AppLayout({ user, children }: AppLayoutProps) {
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="inline-flex items-center gap-2 rounded-full border border-emerald-300 dark:border-emerald-600 bg-emerald-50 dark:bg-slate-800 px-3 py-1.5 text-sm font-medium text-emerald-900 dark:text-emerald-100 shadow-sm transition hover:bg-emerald-100 dark:hover:bg-slate-700"
+                className="inline-flex items-center gap-2 rounded-full border border-emerald-600 dark:border-emerald-600 bg-emerald-600 dark:bg-slate-700 px-3 py-1.5 text-sm font-medium text-white dark:text-white shadow-sm transition hover:bg-emerald-700 dark:hover:bg-slate-600"
               >
                 {isDarkMode ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
                 {isDarkMode ? 'Modo claro' : 'Modo oscuro'}

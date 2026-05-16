@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { MilkProductionWithCattle, ProductionAlertWithCattle } from '@/lib/types';
+import { useRouter } from 'next/navigation';
+import { AppLayout } from '@/components/layout/AppLayout';
+import { MilkProductionWithCattle, ProductionAlertWithCattle, SafeUser } from '@/lib/types';
 
 interface FemaleCattle {
   id: string;
@@ -11,6 +13,36 @@ interface FemaleCattle {
 }
 
 export default function MilkProductionPage() {
+  const [user, setUser] = useState<SafeUser | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('/api/auth/me');
+        if (response.ok) {
+          const data = await response.json();
+          setUser(data.user);
+        } else {
+          router.push('/login');
+        }
+      } catch (error) {
+        console.error('Error fetching user:', error);
+        router.push('/login');
+      }
+    };
+
+    fetchUser();
+  }, [router]);
+
+  if (!user) {
+    return <div className="p-8 text-center">Cargando...</div>;
+  }
+
+  return <MilkProductionPageContent user={user} />;
+}
+
+function MilkProductionPageContent({ user }: { user: SafeUser }) {
   const [females, setFemales] = useState<FemaleCattle[]>([]);
   const [productions, setProductions] = useState<MilkProductionWithCattle[]>([]);
   const [alerts, setAlerts] = useState<ProductionAlertWithCattle[]>([]);
@@ -149,11 +181,12 @@ export default function MilkProductionPage() {
   const shedOptions = Array.from(new Set(females.map(f => f.shed_name).filter(Boolean)));
 
   return (
-    <div className="container mx-auto px-4 py-6 max-w-4xl">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">
-          Registro de Producción Láctea
-        </h1>
+    <AppLayout user={user}>
+      <div className="container mx-auto px-4 py-6 max-w-4xl">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            Registro de Producción Láctea
+          </h1>
 
         {/* Controles */}
         <div className="bg-white rounded-lg shadow p-4 mb-4">
@@ -312,5 +345,6 @@ export default function MilkProductionPage() {
         </div>
       </div>
     </div>
+    </AppLayout>
   );
 }
