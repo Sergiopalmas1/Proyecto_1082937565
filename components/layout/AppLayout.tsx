@@ -1,18 +1,21 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { SafeUser } from '@/lib/types';
 import { ToastProvider } from '@/components/ui';
 import {
   AppLogo,
+  ArrowLeftIcon,
   AuditIcon,
   BarnIcon,
   DashboardIcon,
   MilkIcon,
+  MoonIcon,
   ReportIcon,
   ReproductionIcon,
+  SunIcon,
   UserGroupIcon,
   CowIcon,
   SyringeIcon,
@@ -26,7 +29,7 @@ interface AppLayoutProps {
 type NavigationItem = {
   label: string;
   href: string;
-  icon: React.ElementType;
+  icon: React.ComponentType<{ className?: string }>;
 };
 
 const navigationByRole: Record<string, NavigationItem[]> = {
@@ -58,8 +61,27 @@ const navigationByRole: Record<string, NavigationItem[]> = {
 
 export function AppLayout({ user, children }: AppLayoutProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const navigation = user?.role ? navigationByRole[user.role] : [];
+  const showDashboardButton = pathname !== '/dashboard';
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const initialDark =
+      savedTheme === 'dark' ||
+      (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    setIsDarkMode(initialDark);
+    document.documentElement.classList.toggle('dark', initialDark);
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = !isDarkMode;
+    setIsDarkMode(nextTheme);
+    document.documentElement.classList.toggle('dark', nextTheme);
+    localStorage.setItem('theme', nextTheme ? 'dark' : 'light');
+  };
 
   if (!user || !user.role) {
     return <div>Error: Usuario no válido</div>;
@@ -72,16 +94,16 @@ export function AppLayout({ user, children }: AppLayoutProps) {
 
   return (
     <ToastProvider>
-      <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="min-h-screen flex flex-col md:flex-row bg-[var(--page-background)] transition-colors duration-300">
         {/* Sidebar - Desktop */}
-        <aside className="hidden md:flex md:w-64 flex-col border-r bg-white shadow-lg">
-          <div className="p-6 border-b border-emerald-100 bg-emerald-50">
-            <AppLogo className="text-emerald-900" />
+        <aside className="hidden md:flex md:w-64 flex-col border-r border-[var(--border)] bg-[var(--surface)] shadow-lg transition-colors duration-300">
+          <div className="p-6 border-b border-[var(--border)] bg-[var(--surface-soft)]">
+            <AppLogo className="text-emerald-900 dark:text-emerald-200" />
           </div>
           <nav className="flex-1 space-y-1 p-4">
             {navigation.map((item) => (
               <Link key={item.href} href={item.href}>
-                <div className="px-4 py-3 rounded-2xl hover:bg-emerald-100 transition-colors duration-200 flex items-center gap-3 text-slate-700 hover:text-emerald-800">
+                <div className="px-4 py-3 rounded-2xl hover:bg-emerald-100 transition-colors duration-200 flex items-center gap-3 text-slate-700 hover:text-emerald-800 dark:text-slate-100 dark:hover:bg-slate-800 dark:hover:text-emerald-300">
                   <item.icon className="w-5 h-5 text-emerald-600" />
                   <span className="font-medium">{item.label}</span>
                 </div>
@@ -89,10 +111,10 @@ export function AppLayout({ user, children }: AppLayoutProps) {
             ))}
           </nav>
 
-          <div className="p-4 border-t space-y-3">
-            <div className="px-4 py-3 bg-gray-50 rounded-lg">
-              <p className="font-semibold text-gray-900">{user.name}</p>
-              <p className="text-xs text-gray-500 mt-1 capitalize">{user.role}</p>
+          <div className="p-4 border-t border-[var(--border)] space-y-3 bg-[var(--surface-soft)] dark:bg-slate-800">
+            <div className="px-4 py-3 rounded-lg bg-[var(--surface)] dark:bg-slate-900">
+              <p className="font-semibold text-slate-900 dark:text-slate-100">{user.name}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 capitalize">{user.role}</p>
             </div>
             <button
               onClick={handleLogout}
@@ -106,11 +128,11 @@ export function AppLayout({ user, children }: AppLayoutProps) {
         {/* Main content */}
         <div className="flex-1 flex flex-col pb-20 md:pb-0">
           {/* Header - Mobile */}
-          <header className="md:hidden border-b bg-white/95 shadow-sm p-4 flex justify-between items-center">
-            <AppLogo className="text-emerald-900" />
+          <header className="md:hidden border-b border-[var(--border)] bg-[var(--surface)] shadow-sm p-4 flex justify-between items-center transition-colors duration-300">
+            <AppLogo className="text-emerald-900 dark:text-emerald-200" />
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-2xl text-slate-700 hover:text-emerald-700 transition-colors"
+              className="text-2xl text-slate-700 hover:text-emerald-700 transition-colors dark:text-slate-200 dark:hover:text-emerald-300"
               aria-label="Abrir menú"
             >
               ☰
@@ -119,11 +141,11 @@ export function AppLayout({ user, children }: AppLayoutProps) {
 
           {/* Mobile nav */}
           {sidebarOpen && (
-            <nav className="md:hidden space-y-1 p-4 bg-white border-b">
+            <nav className="md:hidden space-y-1 p-4 bg-[var(--surface)] border-b border-[var(--border)] transition-colors duration-300">
               {navigation.map((item) => (
                 <Link key={item.href} href={item.href}>
                   <div
-                    className="px-4 py-3 rounded-lg hover:bg-emerald-50 transition-colors flex items-center gap-3 text-slate-700 hover:text-emerald-700"
+                    className="px-4 py-3 rounded-lg hover:bg-emerald-50 transition-colors flex items-center gap-3 text-slate-700 hover:text-emerald-700 dark:text-slate-100 dark:hover:bg-slate-800 dark:hover:text-emerald-300"
                     onClick={() => setSidebarOpen(false)}
                   >
                     <item.icon className="w-5 h-5 text-emerald-600" />
@@ -136,13 +158,33 @@ export function AppLayout({ user, children }: AppLayoutProps) {
 
           {/* Page content */}
           <main className="flex-1 p-4 md:p-8">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+              {showDashboardButton && (
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+                >
+                  <ArrowLeftIcon className="w-4 h-4" />
+                  Dashboard
+                </Link>
+              )}
+
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+              >
+                {isDarkMode ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
+                {isDarkMode ? 'Modo claro' : 'Modo oscuro'}
+              </button>
+            </div>
             {children}
           </main>
         </div>
 
         {/* Bottom nav - Mobile */}
         <nav
-          className="md:hidden fixed bottom-0 left-0 right-0 border-t bg-white shadow-lg flex justify-around"
+          className="md:hidden fixed bottom-0 left-0 right-0 border-t border-[var(--border)] bg-[var(--surface)] shadow-lg flex justify-around transition-colors duration-300"
         >
           {navigation.slice(0, 5).map((item) => (
             <Link key={item.href} href={item.href} className="flex-1">
