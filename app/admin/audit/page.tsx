@@ -45,15 +45,15 @@ export default function AuditPage() {
   return (
     <AppLayout user={user}>
       <div>
-        <h1 className="text-3xl font-bold mb-6 text-slate-900 dark:text-white">
+        <h1 className="text-3xl font-bold mb-6 text-black dark:text-white">
           Bitácora de Cambios
         </h1>
 
         <Card className="!bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
           <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
             <div className="mb-4 text-5xl">📝</div>
-            <h2 className="text-2xl font-semibold mb-3 text-slate-900 dark:text-white">Auditoría del sistema</h2>
-            <p className="text-sm text-slate-700 dark:text-slate-300 max-w-xl">
+            <h2 className="text-2xl font-semibold mb-3 text-black dark:text-white">Auditoría del sistema</h2>
+            <p className="text-sm text-black dark:text-white max-w-xl">
               Auditoría activa para registrar cambios en animales, bodegas y procesos del sistema.
             </p>
           </div>
