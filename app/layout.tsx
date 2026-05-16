@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className="h-full antialiased" data-scroll-behavior="smooth">
-      <body className="min-h-full bg-[#F5EFE0] text-slate-900">
+      <body className="min-h-full bg-[var(--page-background)] text-[var(--text-primary)]">
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>

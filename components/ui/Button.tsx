@@ -31,10 +31,10 @@ export function Button({
     primary:
       'bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 shadow-md hover:shadow-lg focus:ring-green-500',
     secondary:
-      'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-400 border border-gray-300',
+      'bg-slate-100 text-slate-900 hover:bg-slate-200 focus:ring-slate-400 border border-slate-300 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700 dark:border-slate-600 dark:focus:ring-slate-500',
     danger: 'bg-red-600 text-white hover:bg-red-700 shadow-md hover:shadow-lg focus:ring-red-500',
     success: 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-md hover:shadow-lg focus:ring-emerald-500',
-    ghost: 'bg-transparent text-green-700 hover:bg-green-50 focus:ring-green-400',
+    ghost: 'bg-transparent text-green-700 hover:bg-green-50 focus:ring-green-400 dark:text-green-300 dark:hover:bg-slate-800',
   }[variant];
 
   return (

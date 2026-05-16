@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect, useCallback, Suspense } from 'react';
+import { useState, useEffect, useCallback, Suspense, ChangeEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { AppLayout } from '@/components/layout/AppLayout';
 import { Card, Button, Badge, Table, Thead, Tbody, Tr, Th, Td, EmptyState, Modal, useToast } from '@/components/ui';
 import { CowIcon, StatsIcon, PlusIcon } from '@/components/ui/Icons';
-import { CattleWithDetails } from '@/lib/types';
+import { CattleWithDetails, SafeUser } from '@/lib/types';
 import { CreateCattleRequest } from '@/lib/validators';
 import { apiFetch } from '@/lib/api';
 
@@ -33,7 +34,8 @@ function CattlePage() {
   const [error, setError] = useState<string | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingCattle, setEditingCattle] = useState<CattleWithDetails | null>(null);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<SafeUser | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const [searchInput, setSearchInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
@@ -74,6 +76,51 @@ function CattlePage() {
 
     return () => window.clearTimeout(timer);
   }, [router, searchInput]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('/api/auth/me', {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          if (isMounted) {
+            setUser(null);
+            setAuthLoading(false);
+          }
+          setTimeout(() => router.push('/login'), 100);
+          return;
+        }
+
+        const userData = await response.json();
+        if (isMounted) {
+          setUser(userData.user);
+        }
+      } catch (error) {
+        console.error('Error fetching auth user:', error);
+        if (isMounted) {
+          setUser(null);
+        }
+        setTimeout(() => router.push('/login'), 100);
+      } finally {
+        if (isMounted) {
+          setAuthLoading(false);
+        }
+      }
+    };
+
+    fetchUser();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [router]);
 
   const loadCattle = useCallback(async () => {
     try {
@@ -242,6 +289,17 @@ function CattlePage() {
     return `${months}m`;
   };
 
+  if (authLoading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--page-background)] text-[var(--text-primary)]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+          <p className="text-[var(--text-primary)]">Cargando información...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -260,7 +318,8 @@ function CattlePage() {
   }
 
   return (
-    <div className="space-y-6">
+    <AppLayout user={user}>
+      <div className="space-y-6">
       {/* Header mejorado */}
       <div className="bg-gradient-to-r from-emerald-600 to-green-600 rounded-xl p-8 text-white shadow-lg">
         <div className="flex items-center justify-between">
@@ -336,7 +395,7 @@ function CattlePage() {
             id="search"
             type="search"
             value={searchInput}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSearchInput(event.target.value)}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => setSearchInput(event.target.value)}
             placeholder="Buscar por código, nombre o bodega"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
           />
@@ -466,7 +525,7 @@ function CattlePage() {
                 type="text"
                 required
                 value={formData.code}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, code: e.target.value })}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, code: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Ej: V001"
               />
@@ -476,7 +535,7 @@ function CattlePage() {
               <input
                 type="text"
                 value={formData.name}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Nombre del animal"
               />
@@ -489,7 +548,7 @@ function CattlePage() {
               <select
                 required
                 value={formData.sex}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, sex: e.target.value as 'macho' | 'hembra' })}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, sex: e.target.value as 'macho' | 'hembra' })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="hembra">Hembra</option>
@@ -502,7 +561,7 @@ function CattlePage() {
                 type="date"
                 required
                 value={formData.birth_date}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, birth_date: e.target.value })}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, birth_date: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
@@ -514,7 +573,7 @@ function CattlePage() {
               <input
                 type="text"
                 value={formData.breed}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, breed: e.target.value })}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, breed: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Ej: Holstein"
               />
@@ -524,7 +583,7 @@ function CattlePage() {
               <input
                 type="text"
                 value={formData.color}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, color: e.target.value })}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, color: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Ej: Blanco y negro"
               />
@@ -538,7 +597,7 @@ function CattlePage() {
                 type="number"
                 step="0.1"
                 value={formData.weight_kg || ''}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, weight_kg: e.target.value ? parseFloat(e.target.value) : undefined })}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, weight_kg: e.target.value ? parseFloat(e.target.value) : undefined })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Ej: 450.5"
               />
@@ -549,7 +608,7 @@ function CattlePage() {
                 type="number"
                 step="0.01"
                 value={formData.estimated_value || ''}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, estimated_value: e.target.value ? parseFloat(e.target.value) : undefined })}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, estimated_value: e.target.value ? parseFloat(e.target.value) : undefined })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Ej: 2500000"
               />
@@ -560,7 +619,7 @@ function CattlePage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Notas</label>
             <textarea
               value={formData.notes}
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setFormData({ ...formData, notes: e.target.value })}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setFormData({ ...formData, notes: e.target.value })}
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Observaciones adicionales..."
@@ -585,5 +644,6 @@ function CattlePage() {
         </form>
       </Modal>
     </div>
+  </AppLayout>
   );
 }

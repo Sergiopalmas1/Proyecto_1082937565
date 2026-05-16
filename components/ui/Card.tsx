@@ -10,9 +10,9 @@ interface CardProps {
 
 export function Card({ children, className = '', variant = 'default' }: CardProps) {
   const variantStyle = {
-    default: 'bg-white rounded-xl p-6 border border-gray-200',
-    elevated: 'bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-200',
-    outlined: 'bg-white rounded-xl p-6 border-2 border-green-200',
+    default: 'bg-[var(--surface)] rounded-xl p-6 border border-[var(--border)]',
+    elevated: 'bg-[var(--surface)] rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-200',
+    outlined: 'bg-[var(--surface)] rounded-xl p-6 border-2 border-emerald-200 dark:border-emerald-300/80',
   }[variant];
 
   return (

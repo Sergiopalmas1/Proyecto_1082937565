@@ -56,6 +56,45 @@ body {
   font-family: var(--font-body), system-ui, sans-serif;
 }
 
+html.dark .bg-white {
+  background-color: var(--surface) !important;
+}
+
+html.dark .bg-white\/20 {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark .bg-gray-50,
+html.dark .bg-slate-50 {
+  background-color: #111827 !important;
+}
+
+html.dark .border-gray-200 {
+  border-color: #334155 !important;
+}
+
+html.dark .border-gray-300 {
+  border-color: #475569 !important;
+}
+
+html.dark .text-gray-900 {
+  color: #e2e8f0 !important;
+}
+
+html.dark .text-gray-700 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-gray-600,
+html.dark .text-gray-500,
+html.dark .text-gray-400 {
+  color: #94a3b8 !important;
+}
+
+html.dark .hover\:bg-gray-50:hover {
+  background-color: #1f2937 !important;
+}
+
 img {
   display: block;
   max-width: 100%;

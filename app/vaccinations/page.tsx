@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, ChangeEvent } from 'react';
+import { useRouter } from 'next/navigation';
+import { AppLayout } from '@/components/layout/AppLayout';
 import { SyringeIcon, AlertIcon, CheckIcon, PlusIcon } from '@/components/ui/Icons';
-import { VaccineType, VaccinationWithCattle, VaccinationAlert } from '@/lib/types';
+import { SafeUser, VaccineType, VaccinationWithCattle, VaccinationAlert } from '@/lib/types';
 
 interface Cattle {
   id: string;
@@ -13,6 +15,9 @@ interface Cattle {
 }
 
 export default function VaccinationsPage() {
+  const [user, setUser] = useState<SafeUser | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const router = useRouter();
   const [vaccineTypes, setVaccineTypes] = useState<VaccineType[]>([]);
   const [cattle, setCattle] = useState<Cattle[]>([]);
   const [alerts, setAlerts] = useState<VaccinationAlert[]>([]);
@@ -70,10 +75,52 @@ export default function VaccinationsPage() {
   }, []);
 
   useEffect(() => {
+    let isMounted = true;
+
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('/api/auth/me', {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          if (isMounted) {
+            setUser(null);
+            setAuthLoading(false);
+          }
+          setTimeout(() => router.push('/login'), 100);
+          return;
+        }
+
+        const userData = await response.json();
+        if (isMounted) {
+          setUser(userData.user);
+        }
+      } catch (error) {
+        console.error('Error fetching auth user:', error);
+        if (isMounted) {
+          setUser(null);
+        }
+        setTimeout(() => router.push('/login'), 100);
+      } finally {
+        if (isMounted) {
+          setAuthLoading(false);
+        }
+      }
+    };
+
+    fetchUser();
     loadVaccineTypes();
     loadCattle();
     loadAlerts();
-  }, [loadVaccineTypes, loadCattle, loadAlerts]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [loadVaccineTypes, loadCattle, loadAlerts, router]);
 
   // Registrar vacunación individual
   const registerVaccination = async (cattleId: string) => {
@@ -172,9 +219,21 @@ export default function VaccinationsPage() {
     ? cattle.filter(c => c.sex === selectedVaccine.allowed_sex)
     : cattle;
 
+  if (authLoading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--page-background)] text-[var(--text-primary)]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-[var(--text-primary)]">Cargando información...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container mx-auto px-4 py-6 max-w-6xl">
-      {/* Header mejorado */}
+    <AppLayout user={user}>
+      <div className="container mx-auto px-4 py-6 max-w-6xl">
+        {/* Header mejorado */}
       <div className="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl p-8 text-white shadow-lg mb-6">
         <div className="flex items-center gap-4">
           <div className="bg-white/20 p-3 rounded-lg">
@@ -198,10 +257,10 @@ export default function VaccinationsPage() {
               </h3>
               <div className="space-y-2">
                 {alerts.map(alert => (
-                  <div key={`${alert.cattle_id}-${alert.vaccine_type_name}`} className="flex items-center justify-between bg-white p-3 rounded border border-amber-200 hover:border-amber-400 transition">
+                  <div key={`${alert.cattle_id}-${alert.vaccine_type_name}`} className="flex items-center justify-between bg-[var(--surface)] p-3 rounded border border-amber-200 hover:border-amber-400 transition">
                     <div className="flex-1">
-                      <span className="font-semibold text-gray-900">{alert.cattle_code}</span>
-                      {alert.cattle_name && <span className="text-gray-600"> - {alert.cattle_name}</span>}
+                      <span className="font-semibold text-[var(--text-primary)]">{alert.cattle_code}</span>
+                      {alert.cattle_name && <span className="text-[var(--text-secondary)]"> - {alert.cattle_name}</span>}
                     </div>
                     <div className="text-right">
                       <span className="text-amber-700 font-medium text-sm">{alert.vaccine_type_name}</span>
@@ -216,8 +275,8 @@ export default function VaccinationsPage() {
       )}
 
       {/* Formulario de vacunación mejorado */}
-        <div className="bg-white rounded-xl shadow-md p-8 mb-6 border-t-4 border-t-blue-500">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+        <div className="bg-[var(--surface)] rounded-xl shadow-md p-8 mb-6 border-t-4 border-t-blue-500">
+          <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2">
             <SyringeIcon className="w-6 h-6 text-blue-600" />
             Registrar Vacunación
           </h2>
@@ -229,7 +288,7 @@ export default function VaccinationsPage() {
               </label>
               <select
                 value={selectedVaccineType}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedVaccineType(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) => setSelectedVaccineType(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               >
                 <option value="">Seleccionar vacuna</option>
@@ -248,7 +307,7 @@ export default function VaccinationsPage() {
               <input
                 type="date"
                 value={appliedDate}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAppliedDate(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setAppliedDate(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -260,7 +319,7 @@ export default function VaccinationsPage() {
               <input
                 type="text"
                 value={dose}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDose(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setDose(e.target.value)}
                 placeholder="Ej: 2ml"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               />
@@ -273,7 +332,7 @@ export default function VaccinationsPage() {
               <input
                 type="text"
                 value={notes}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNotes(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setNotes(e.target.value)}
                 placeholder="Observaciones"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               />
@@ -300,19 +359,19 @@ export default function VaccinationsPage() {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                   {filteredCattle.map(animal => (
-                    <label key={animal.id} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                    <label key={animal.id} className="flex items-center space-x-2 p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded cursor-pointer">
                       <input
                         type="checkbox"
                         checked={selectedCattle.includes(animal.id)}
                         onChange={() => toggleCattleSelection(animal.id)}
-                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-slate-600"
                       />
                       <div className="flex-1">
-                        <code className="text-sm font-mono bg-gray-100 px-1 rounded">
+                        <code className="text-sm font-mono bg-slate-100 dark:bg-slate-800 px-1 rounded">
                           {animal.code}
                         </code>
-                        {animal.name && <span className="text-gray-600 ml-1">{animal.name}</span>}
-                        <span className="text-xs text-gray-500 ml-1">({animal.sex})</span>
+                        {animal.name && <span className="text-[var(--text-secondary)] ml-1">{animal.name}</span>}
+                        <span className="text-xs text-[var(--text-secondary)] ml-1">({animal.sex})</span>
                       </div>
                     </label>
                   ))}
@@ -341,5 +400,6 @@ export default function VaccinationsPage() {
           </div>
         </div>
       </div>
+    </AppLayout>
   );
 }
