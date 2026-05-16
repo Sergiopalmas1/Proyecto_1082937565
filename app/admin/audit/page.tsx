@@ -49,15 +49,27 @@ export default function AuditPage() {
           Bitácora de Cambios
         </h1>
 
-        <Card className="!bg-white dark:!bg-slate-900 border border-slate-200 dark:border-slate-700">
-          <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
+        <div 
+          className="border border-slate-200 dark:border-slate-700 rounded-xl p-6"
+          style={{
+            backgroundColor: 'white',
+            color: 'black'
+          }}
+        >
+          <style>{`
+            html.dark [data-audit-card] {
+              background-color: #0f172a !important;
+              color: white !important;
+            }
+          `}</style>
+          <div data-audit-card className="flex flex-col items-center justify-center py-12 px-6 text-center">
             <div className="mb-4 text-5xl">📝</div>
-            <h2 className="text-2xl font-semibold mb-3 text-black dark:text-white">Auditoría del sistema</h2>
-            <p className="text-sm text-black dark:text-white max-w-xl">
+            <h2 className="text-2xl font-semibold mb-3 text-inherit">Auditoría del sistema</h2>
+            <p className="text-sm text-inherit max-w-xl">
               Auditoría activa para registrar cambios en animales, bodegas y procesos del sistema.
             </p>
           </div>
-        </Card>
+        </div>
       </div>
     </AppLayout>
   );
