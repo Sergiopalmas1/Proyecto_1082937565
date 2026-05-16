@@ -44,8 +44,13 @@ export default function AuditPage() {
 
   return (
     <AppLayout user={user}>
+      <style>{`
+        html.dark h1[data-audit-title] {
+          color: white !important;
+        }
+      `}</style>
       <div>
-        <h1 className="text-3xl font-bold mb-6 text-black dark:text-white">
+        <h1 className="text-3xl font-bold mb-6 dark:text-white" style={{ color: '#000000' }} data-audit-title>
           Bitácora de Cambios
         </h1>
 
