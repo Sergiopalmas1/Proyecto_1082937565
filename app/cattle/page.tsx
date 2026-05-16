@@ -274,15 +274,6 @@ function CattlePage() {
             </div>
           </div>
 
-          {user?.role === 'admin' && (
-            <Button 
-              onClick={openCreateModal}
-              className="flex items-center gap-2 bg-white text-emerald-600 hover:bg-emerald-50"
-            >
-              <PlusIcon className="w-5 h-5" />
-              Nuevo Animal
-            </Button>
-          )}
         </div>
       </div>
 
