@@ -45,16 +45,18 @@ export default function AuditPage() {
   return (
     <AppLayout user={user}>
       <div>
-        <h1 className="text-3xl font-bold mb-6" style={{ color: '#1F3A0D' }}>
+        <h1 className="text-3xl font-bold mb-6 text-slate-900">
           Bitácora de Cambios
         </h1>
 
-        <Card>
-          <EmptyState
-            icon="📝"
-            title="Auditoría del sistema"
-            description="Esta funcionalidad se implementará en la Fase 4 — Registro y Gestión de Animales"
-          />
+        <Card className="bg-white border border-slate-200">
+          <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
+            <div className="mb-4 text-5xl">📝</div>
+            <h2 className="text-2xl font-semibold mb-3 text-slate-900">Auditoría del sistema</h2>
+            <p className="text-sm text-slate-800 max-w-xl">
+              Auditoría activa para registrar cambios en animales, bodegas y procesos del sistema.
+            </p>
+          </div>
         </Card>
       </div>
     </AppLayout>
