@@ -5,36 +5,54 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { SafeUser } from '@/lib/types';
 import { ToastProvider } from '@/components/ui';
+import {
+  AppLogo,
+  AuditIcon,
+  BarnIcon,
+  DashboardIcon,
+  MilkIcon,
+  ReportIcon,
+  ReproductionIcon,
+  UserGroupIcon,
+  CowIcon,
+  SyringeIcon,
+} from '@/components/ui/Icons';
 
 interface AppLayoutProps {
   user: SafeUser;
   children: React.ReactNode;
 }
 
-const navigationByRole = {
+type NavigationItem = {
+  label: string;
+  href: string;
+  icon: React.ElementType;
+};
+
+const navigationByRole: Record<string, NavigationItem[]> = {
   admin: [
-    { label: 'Dashboard', href: '/dashboard', icon: '📊' },
-    { label: 'Animales', href: '/cattle', icon: '🐄' },
-    { label: 'Bodegas', href: '/sheds', icon: '🏠' },
-    { label: 'Producción', href: '/milk', icon: '🥛' },
-    { label: 'Vacunación', href: '/vaccinations', icon: '💉' },
-    { label: 'Reproducción', href: '/reproduction', icon: '🔄' },
-    { label: 'Reportes', href: '/reports', icon: '📋' },
-    { label: 'Usuarios', href: '/admin/users', icon: '👥' },
-    { label: 'Auditoría', href: '/admin/audit', icon: '📝' },
+    { label: 'Dashboard', href: '/dashboard', icon: DashboardIcon },
+    { label: 'Animales', href: '/cattle', icon: CowIcon },
+    { label: 'Bodegas', href: '/sheds', icon: BarnIcon },
+    { label: 'Producción', href: '/milk', icon: MilkIcon },
+    { label: 'Vacunación', href: '/vaccinations', icon: SyringeIcon },
+    { label: 'Reproducción', href: '/reproduction', icon: ReproductionIcon },
+    { label: 'Reportes', href: '/reports', icon: ReportIcon },
+    { label: 'Usuarios', href: '/admin/users', icon: UserGroupIcon },
+    { label: 'Auditoría', href: '/admin/audit', icon: AuditIcon },
   ],
   veterinario: [
-    { label: 'Dashboard', href: '/dashboard', icon: '📊' },
-    { label: 'Animales', href: '/cattle', icon: '🐄' },
-    { label: 'Vacunación', href: '/vaccinations', icon: '💉' },
-    { label: 'Reproducción', href: '/reproduction', icon: '🔄' },
-    { label: 'Reportes', href: '/reports', icon: '📋' },
+    { label: 'Dashboard', href: '/dashboard', icon: DashboardIcon },
+    { label: 'Animales', href: '/cattle', icon: CowIcon },
+    { label: 'Vacunación', href: '/vaccinations', icon: SyringeIcon },
+    { label: 'Reproducción', href: '/reproduction', icon: ReproductionIcon },
+    { label: 'Reportes', href: '/reports', icon: ReportIcon },
   ],
   operario: [
-    { label: 'Dashboard', href: '/dashboard', icon: '📊' },
-    { label: 'Animales', href: '/cattle', icon: '🐄' },
-    { label: 'Producción', href: '/milk', icon: '🥛' },
-    { label: 'Reportes', href: '/reports', icon: '📋' },
+    { label: 'Dashboard', href: '/dashboard', icon: DashboardIcon },
+    { label: 'Animales', href: '/cattle', icon: CowIcon },
+    { label: 'Producción', href: '/milk', icon: MilkIcon },
+    { label: 'Reportes', href: '/reports', icon: ReportIcon },
   ],
 };
 
@@ -57,16 +75,14 @@ export function AppLayout({ user, children }: AppLayoutProps) {
       <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-slate-50 to-slate-100">
         {/* Sidebar - Desktop */}
         <aside className="hidden md:flex md:w-64 flex-col border-r bg-white shadow-lg">
-          <div className="p-6 border-b">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent">
-              🐄 SIG Bovino
-            </h1>
+          <div className="p-6 border-b border-emerald-100 bg-emerald-50">
+            <AppLogo className="text-emerald-900" />
           </div>
           <nav className="flex-1 space-y-1 p-4">
             {navigation.map((item) => (
               <Link key={item.href} href={item.href}>
-                <div className="px-4 py-3 rounded-lg hover:bg-green-50 transition-colors duration-200 flex items-center gap-3 text-gray-700 hover:text-green-700">
-                  <span className="text-lg">{item.icon}</span>
+                <div className="px-4 py-3 rounded-2xl hover:bg-emerald-100 transition-colors duration-200 flex items-center gap-3 text-slate-700 hover:text-emerald-800">
+                  <item.icon className="w-5 h-5 text-emerald-600" />
                   <span className="font-medium">{item.label}</span>
                 </div>
               </Link>
@@ -90,13 +106,12 @@ export function AppLayout({ user, children }: AppLayoutProps) {
         {/* Main content */}
         <div className="flex-1 flex flex-col pb-20 md:pb-0">
           {/* Header - Mobile */}
-          <header className="md:hidden border-b bg-white shadow-sm p-4 flex justify-between items-center">
-            <h1 className="text-xl font-bold bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent">
-              SIG Bovino
-            </h1>
+          <header className="md:hidden border-b bg-white/95 shadow-sm p-4 flex justify-between items-center">
+            <AppLogo className="text-emerald-900" />
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-2xl text-gray-700 hover:text-green-600 transition-colors"
+              className="text-2xl text-slate-700 hover:text-emerald-700 transition-colors"
+              aria-label="Abrir menú"
             >
               ☰
             </button>
@@ -108,10 +123,10 @@ export function AppLayout({ user, children }: AppLayoutProps) {
               {navigation.map((item) => (
                 <Link key={item.href} href={item.href}>
                   <div
-                    className="px-4 py-3 rounded-lg hover:bg-green-50 transition-colors flex items-center gap-3 text-gray-700 hover:text-green-700"
+                    className="px-4 py-3 rounded-lg hover:bg-emerald-50 transition-colors flex items-center gap-3 text-slate-700 hover:text-emerald-700"
                     onClick={() => setSidebarOpen(false)}
                   >
-                    <span className="text-lg">{item.icon}</span>
+                    <item.icon className="w-5 h-5 text-emerald-600" />
                     <span className="font-medium">{item.label}</span>
                   </div>
                 </Link>
@@ -131,8 +146,8 @@ export function AppLayout({ user, children }: AppLayoutProps) {
         >
           {navigation.slice(0, 5).map((item) => (
             <Link key={item.href} href={item.href} className="flex-1">
-              <div className="flex flex-col items-center justify-center py-3 text-xs hover:bg-green-50 transition-colors text-gray-700 hover:text-green-600">
-                <span className="text-xl mb-1">{item.icon}</span>
+              <div className="flex flex-col items-center justify-center py-3 text-xs hover:bg-emerald-50 transition-colors text-slate-700 hover:text-emerald-700">
+                <item.icon className="w-5 h-5 mb-1 text-emerald-600" />
                 <span>{item.label}</span>
               </div>
           </Link>

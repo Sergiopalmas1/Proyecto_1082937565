@@ -20,15 +20,121 @@ export function AppLogo({ className }: { className?: string }) {
   return (
     <div className={`flex items-center gap-3 ${className ?? ''}`}>
       <svg 
-        className="w-6 h-6 text-emerald-300" 
+        className="w-6 h-6 text-emerald-500" 
         fill="currentColor" 
         viewBox="0 0 24 24" 
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
         <path d="M12 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm8 5h-1V6c0-1.1-.9-2-2-2h-2V2h-2v2H9c-1.1 0-2 .9-2 2v1H4c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2v2h2v-2h12v2h2v-2c1.1 0 2-.9 2-2v-9c0-1.1-.9-2-2-2zm-7 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm7-4c-.6 0-1 .4-1 1s.4 1 1 1 1-.4 1-1-.4-1-1-1z" />
       </svg>
-      <span className="font-semibold text-lg text-emerald-100">SIG Bovino</span>
+      <span className="font-semibold text-lg text-emerald-900">SIG Bovino</span>
     </div>
+  );
+}
+
+export function DashboardIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className ?? 'w-5 h-5'}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 13h8V3H3v10zm10 8h8V11h-8v10zm0-18v8h8V3h-8zm-10 10h8v8H3v-8z" />
+    </svg>
+  );
+}
+
+export function BarnIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className ?? 'w-5 h-5'}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 20V9.5l8-5 8 5V20H4zm8-12.5L6 8.5v9.5h4v-6h4v6h4V8.5l-6-1z" />
+    </svg>
+  );
+}
+
+export function MilkIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className ?? 'w-5 h-5'}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 3H8a1 1 0 00-1 1v2h10V4a1 1 0 00-1-1zM6 6v13h12V6H6zm4 3h4v5h-4V9z" />
+    </svg>
+  );
+}
+
+export function ReportIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className ?? 'w-5 h-5'}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m-7-10h8l3 3v9a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2z" />
+    </svg>
+  );
+}
+
+export function UserGroupIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className ?? 'w-5 h-5'}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1m4-3a4 4 0 11-8 0 4 4 0 018 0zm6 0a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>
+  );
+}
+
+export function AuditIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className ?? 'w-5 h-5'}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6M9 16h6M9 8h6M7 20h10a2 2 0 002-2V6a2 2 0 00-2-2H7a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  );
+}
+
+export function ReproductionIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className ?? 'w-5 h-5'}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v6h6M20 20v-6h-6M5.5 5.5l4.5 4.5M18.5 18.5l-4.5-4.5" />
+    </svg>
   );
 }
 
