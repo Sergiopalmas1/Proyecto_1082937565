@@ -158,16 +158,18 @@ export function AppLayout({ user, children }: AppLayoutProps) {
 
           {/* Page content */}
           <main className="flex-1 p-4 md:p-8">
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-              {showDashboardButton && (
-                <Link
-                  href="/dashboard"
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
-                >
-                  <ArrowLeftIcon className="w-4 h-4" />
-                  Dashboard
-                </Link>
-              )}
+            <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-2">
+                {showDashboardButton && (
+                  <Link
+                    href="/dashboard"
+                    className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+                  >
+                    <ArrowLeftIcon className="w-4 h-4" />
+                    Dashboard
+                  </Link>
+                )}
+              </div>
 
               <button
                 type="button"
